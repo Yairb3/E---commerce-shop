@@ -10,10 +10,12 @@ export const Category = {
 
 export function DataProvider({children}) {
     const [data, setData] = useState([])
+    const [filter, setFilter] = useState([])
+
     const userIdToProducts = {}
     const productIdToUser = {}
 
-    return (<DataContext.Provider value={{data, setData, userIdToProducts, productIdToUser}}>
+    return (<DataContext.Provider value={{data, setData,filter, setFilter, userIdToProducts, productIdToUser}}>
         {children}
         </DataContext.Provider>);
 }
