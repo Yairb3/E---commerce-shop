@@ -6,9 +6,11 @@ import Products from "./component/Products";
 import Login from "./component/Login";
 import Product from "./component/Product";
 import Cart from "./component/Cart";
+import { DataProvider } from "./component/usedb";
 function App() {
   return (
-    <>
+  <>
+    <DataProvider>
       <Navbar />
       <Switch>
         <Route exact path="/" component={Home} />
@@ -17,7 +19,8 @@ function App() {
         <Route exact path="/products/:id" component={Product} />
         <Route exact path="/cart" component={Cart} />
       </Switch>
-    </>
+    </DataProvider>
+  </>
   );
 }
 

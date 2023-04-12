@@ -4,16 +4,21 @@ import { addCart } from '../redux/action';
 import { useParams } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import Skeleton from 'react-loading-skeleton';
+import ProfileCard from './ProfileCard';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Product = () => {
 
     const {id} = useParams();
     const [product, setProduct] = useState([]);
     const [loading, setLoading] = useState(false);
-
+    const success = () => toast.success("Item wad added to cart!");
     const dispatch = useDispatch();
     const addProduct = (product) => {
+        success();
         dispatch(addCart(product));
+        
     }
 
     useEffect(() => {
@@ -24,7 +29,7 @@ const Product = () => {
             setLoading(false);
         }
         getProduct();
-    }, []);
+    }, [id]);
 
     const Loading = () => {
         return(
@@ -46,11 +51,12 @@ const Product = () => {
     }
     const ShowProduct = () => {
         return(
-            <>
-                <div className="col-md-6">
-                    <img src={product.image} alt={product.title} height="400px" width="400px" />
+        <div class="wrapper">
+
+                <div className='box2'>
+                    <img src={product.image} alt={product.title} height="300px" width="300px" className='boxImage'/>
                 </div>
-                <div className="col-md-6">
+                <div className='box3'>
                     <h4 className="text-uppercase text-black-50">
                         {product.category}
                     </h4>
@@ -65,24 +71,26 @@ const Product = () => {
                     <p className="lead">{product.description}</p>
                     <button className="btn btn-outline-dark px-4 py-2" onClick={()=>addProduct(product)}>
                         Add to Cart
+                    <ToastContainer />
                     </button>
                     <NavLink to="/cart" className="btn btn-dark ms-2 px-3 py-2">
                         Go to Cart
-                    </NavLink>
+                    </NavLink>    
                 </div>
-            </>
+                <div overflow="none">
+                    <ProfileCard/>
+                </div>
+            </div>
         )
     }
 
     return (
         <div>
-            <div className="container py-5">
-                <div className="row py-4">
-                    {loading ? <Loading/> : <ShowProduct/>}
-                </div>
-            </div>
+            {loading ? <Loading/> : <ShowProduct/>}
         </div>
     );
 }
 
 export default Product;
+
+
