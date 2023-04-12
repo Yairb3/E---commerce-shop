@@ -1,10 +1,8 @@
-import React, { useContext } from "react";
+import React from 'react';
 import "../App.css";
 import avatar from "../images/roee-n-avatar.png";
-import DataContext from "./usedb";
 
 function ProfileCard(props) {
-  const {item} = useContext(DataContext)
 	return (
 		<div className="card-container">
 			<header>

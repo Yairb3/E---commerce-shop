@@ -52,7 +52,6 @@ const Product = () => {
     const ShowProduct = () => {
         return(
         <div class="wrapper">
-
                 <div className='box2'>
                     <img src={product.image} alt={product.title} height="300px" width="300px" className='boxImage'/>
                 </div>
