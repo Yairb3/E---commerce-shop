@@ -2,10 +2,13 @@ import React, { useState, useEffect, useContext } from "react";
 import Skeleton from "react-loading-skeleton";
 import DataContext from "./usedb";
 import Items from "./Items";
+import "../App.css";
+import AddNewItemForm from "./AddNewItemForm";
+
 
 
 const Products = () => {
-  const {data, setData, filter, setFilter} = useContext(DataContext)
+  const {data, setData, filter, setFilter, isLoggedIn} = useContext(DataContext)
   const [loading, setLoading] = useState(false);
   let componentMounted = true;
 
@@ -51,6 +54,9 @@ const Products = () => {
       const updatedList = data.filter((x)=>x.category === cat);
       setFilter(updatedList);
   }
+  const openForm = () => {
+    document.getElementById("myForm").style.display = "block";
+  }
 
   const ShowProducts = () => {
     return (
@@ -62,9 +68,10 @@ const Products = () => {
           <button className="btn btn-outline-dark me-2" onClick={()=>filterProduct("women's clothing")}>
             Women's Clothing
           </button>
-          <button className="btn btn-outline-dark me-2" onClick={()=>filterProduct("jewelery")}>Jewelery</button>
-          <button className="btn btn-outline-dark me-2" onClick={()=>filterProduct("electronics")}>Electronic</button>
+          {!isLoggedIn ? <button className="btn btn-outline-dark me-2" onClick={() => openForm()}>Add New Item</button> : undefined}
+        <AddNewItemForm />
         </div>
+     
         <Items />
       </>
     );

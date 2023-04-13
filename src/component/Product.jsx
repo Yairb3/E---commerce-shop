@@ -13,7 +13,7 @@ const Product = () => {
     const {id} = useParams();
     const [product, setProduct] = useState([]);
     const [loading, setLoading] = useState(false);
-    const success = () => toast.success("Item wad added to cart!");
+    const success = () => toast.success("Item was added to cart!");
     const dispatch = useDispatch();
     const addProduct = (product) => {
         success();
