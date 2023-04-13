@@ -11,11 +11,12 @@ export const Category = {
 export function DataProvider({children}) {
     const [data, setData] = useState([])
     const [filter, setFilter] = useState([])
-
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
     const userIdToProducts = {}
     const productIdToUser = {}
 
-    return (<DataContext.Provider value={{data, setData,filter, setFilter, userIdToProducts, productIdToUser}}>
+    return (<DataContext.Provider value=
+    {{data, setData,filter, setFilter, userIdToProducts, productIdToUser, isLoggedIn, setIsLoggedIn}}>
         {children}
         </DataContext.Provider>);
 }
