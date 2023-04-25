@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import { useDispatch } from 'react-redux';
 import { addCart } from '../redux/action';
 import { useParams } from 'react-router';
@@ -7,10 +7,13 @@ import Skeleton from 'react-loading-skeleton';
 import ProfileCard from './ProfileCard';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import DataContext from "./usedb";
+
 
 const Product = () => {
 
     const {id} = useParams();
+    const { idToProduct, data} = useContext(DataContext);
     const [product, setProduct] = useState([]);
     const [loading, setLoading] = useState(false);
     const success = () => toast.success("Item was added to cart!");
@@ -24,12 +27,11 @@ const Product = () => {
     useEffect(() => {
         const getProduct = async () => {
             setLoading(true);
-            const response = await fetch(`https://fakestoreapi.com/products/${id}`);
-            setProduct(await response.json());
+            setProduct(idToProduct[id]);
             setLoading(false);
         }
         getProduct();
-    }, [id]);
+    }, [id, idToProduct]);
 
     const Loading = () => {
         return(
