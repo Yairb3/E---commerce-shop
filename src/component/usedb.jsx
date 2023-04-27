@@ -17,6 +17,15 @@ export function DataProvider({children}) {
     const productIdToUser = {}
     const [idToProduct, setIdToProduct] = useState({})
 
+    useEffect(() => {
+      const getProducts = async () => {
+        const response = await fetch("https://fakestoreapi.com/products");
+          setData(await response.clone().json());
+          setFilter(await response.json());
+      };
+      getProducts();
+    }, []);
+
 useEffect(() => {
   const myData = window.localStorage.getItem('DATA')
   if(myData){

@@ -11,7 +11,6 @@ const Products = () => {
   const {data, setFilter, isLoggedIn} = useContext(DataContext)
   const [loading, setLoading] = useState(false);
 
-
   const Loading = () => {
     return (
     <>
