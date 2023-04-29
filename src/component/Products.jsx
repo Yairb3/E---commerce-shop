@@ -35,7 +35,12 @@ const Products = () => {
       setFilter(updatedList);
   }
   const openForm = () => {
-    document.getElementById("myForm").style.display = "block";
+    if (isLoggedIn) {
+      document.getElementById("myForm").style.display = "block";
+    }
+    else{
+      alert("Please log in to add new item.");
+    }
   }
 
   const ShowProducts = () => {
@@ -47,7 +52,7 @@ const Products = () => {
           <button className="btn btn-outline-dark me-2" onClick={()=>filterProduct(`women's clothing`)}>
             Women's Clothing
           </button>
-          {!isLoggedIn ? <button className="btn btn-outline-dark me-2" onClick={() => openForm()}>Add New Item</button> : undefined}
+           <button className="btn btn-outline-dark me-2" onClick={() => openForm()}>Add New Item</button> 
         <AddNewItemForm />
         </div>
         <Items />
