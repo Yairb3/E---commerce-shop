@@ -37,6 +37,7 @@ const AddNewItemForm = () => {
       const newItem = {
         email,
         image,
+        title,
         description,
         price,
         category: itemCategory,
