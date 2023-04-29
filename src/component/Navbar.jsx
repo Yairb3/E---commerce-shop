@@ -1,17 +1,45 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { NavLink, useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Logo from './Logo';
+import DataContext from "./usedb";
 
-const Navbar = () => {
+
+const Navbar = ({}) => {
+  
     const state = useSelector((state)=> state.handleCart)
+    const { isLoggedIn, setIsLoggedIn,currentUser, setCurrentUser, currentName, setCurrentName} = useContext(DataContext)
+    const history = useHistory();
+    function handleLogout() {
+      const confirmLogout = window.confirm("Are you sure you want to log out?");
+      if (confirmLogout){
+      setIsLoggedIn(false);
+      
+      // Redirect to the home page
+      history.push('/');
+      }
+    }
+
+    function handleCart() {
+      const confirmLogout = window.confirm("Are you sure you want to log out?");
+      if (confirmLogout){
+      setIsLoggedIn(false);
+      
+      // Redirect to the home page
+      history.push('/');
+      }
+    }
+
   return (
+    
     <div>
+      
+      
       <nav className="navbar navbar-expand-lg navbar-light bg-white py-3 shadow-sm">
+      <Logo />
         <div className="container">
-          <NavLink className="navbar-brand fw-bold fs-4" to="/">
-          Second Hand Selling
-            
-          </NavLink>
+          
+          
           <button
             className="navbar-toggler"
             type="button"
@@ -47,12 +75,32 @@ const Navbar = () => {
               </li>
             </ul>
             <div className="buttons">
-                <NavLink to="/Login" className="btn btn-outline-dark">
-                   <i className="fa fa-sign-in me-1"></i> Login</NavLink>
-                <NavLink to="/register" className="btn btn-outline-dark ms-2">
-                   <i className="fa fa-user-plus me-1"></i> Register</NavLink>
-                <NavLink to="/cart" className="btn btn-outline-dark ms-2">
-                   <i className="fa fa-shopping-cart me-1"></i> Cart ({state.length})</NavLink>
+            {isLoggedIn ? (
+                <>
+                  <NavLink to="/profile"   className="btn btn-outline-dark ">
+                    <i className="fa fa-sign-in me-1"></i> Hello {currentName} !    
+                  </NavLink>
+                  
+                  <NavLink to="/cart" className="btn btn-outline-dark ms-2">  
+                    <i className="fa fa-shopping-cart me-1"></i> Cart ({state.length})
+                  </NavLink>
+                  <NavLink to="/" activeClassName="active" onClick={handleLogout} className="btn btn-outline-dark">
+                  <i className="fa fa-sign-in me-1"></i> Logout
+                  </NavLink>
+                </>
+              ) : (
+                <>
+                  <NavLink to="/Login" className="btn btn-outline-dark">
+                    <i className="fa fa-sign-in me-1"></i> Login
+                  </NavLink>
+                  <NavLink to="/Signup" className="btn btn-outline-dark ms-2">
+                    <i className="fa fa-user-plus me-1"></i> Register
+                  </NavLink>
+                  <NavLink to={"#"} className="btn btn-outline-dark ms-2" onClick={() => {alert("Please log in to view your cart.");  }}>
+                     <i className="fa fa-shopping-cart me-1"></i> Cart ({state.length})
+                  </NavLink>
+                </>
+              )}
             </div>
           </div>
         </div>

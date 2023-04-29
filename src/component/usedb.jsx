@@ -49,8 +49,11 @@ useEffect(() => {
 
 
 
+    const [currentUser, setCurrentUser] = useState("")
+    const [currentName, setCurrentName, ] = useState("")
+
     return (<DataContext.Provider value=
-    {{idToProduct, data, setData,filter, setFilter, userIdToProducts, productIdToUser, isLoggedIn, setIsLoggedIn, id, setId}}>
+    {{data, setData,id, setId,filter,idToProduct, setIdToProduct, setFilter, userIdToProducts, productIdToUser, isLoggedIn, setIsLoggedIn,currentUser, currentName,setCurrentUser,setCurrentName}}>
         {children}
         </DataContext.Provider>);
 }
