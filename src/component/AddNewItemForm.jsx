@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import "../App.css";
 import DataContext, { Category }from "./usedb";
+import emailjs from "emailjs-com";
 
 const AddNewItemForm = () => {
   const { data, setData, id, setId, idToProduct} = useContext(
@@ -25,7 +26,7 @@ const AddNewItemForm = () => {
   }
 
   const validateFields = () => {
-    const isValid = email && image && description && price;
+    const isValid = email && description && price && image;
     if (!isValid) {
       alert("Please fill in all fields before uploading.");
     }
@@ -37,6 +38,7 @@ const AddNewItemForm = () => {
       const newItem = {
         email,
         image,
+        title,
         description,
         price,
         category: itemCategory,
@@ -44,11 +46,15 @@ const AddNewItemForm = () => {
         id,
       };
       idToProduct[id] = newItem;
-      console.log("%o", {idToProduct})
+      emailjs.send(
+        "service_pq206ba",
+        "template_wgr42dq",
+        newItem,
+        "7EL9yGfRLnRx5EzQ8",
+      )
       setId(id + 1)
       data.push(newItem)
       setData(data)
-      console.log("%o", {data})
       closeForm();
     }
   };
@@ -80,16 +86,17 @@ const AddNewItemForm = () => {
             type="file"
             className="filetype"
             id="group_image"
+            name="image"
             accept="image/x-png,image/gif,image/jpeg"
             onChange={handleImageChange}
           />
-            <label htmlFor="description">
+            <label htmlFor="title">
             <b>Title</b>
           </label>
           <textarea
             rows="1"
             cols="30"
-            name="description"
+            name="title"
             form="usrform"
             placeholder="Enter Title here..."
             value={title}
