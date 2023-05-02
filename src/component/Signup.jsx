@@ -16,16 +16,25 @@ function Signup ({ onSignup }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
-
+    const [age, setAge] = useState("");
+    const [image, setImage] = useState(null);
     const [errors, setErrors] = useState({});
 
-    // const handleInput = (event) => {
-    //     setValues(prev => ({ ...prev, [event.target.name]: event.target.value }));
-    // };
+    function handleImageChange(event) {
+        if (event.target.files && event.target.files[0]) {
+          setImage(URL.createObjectURL(event.target.files[0]));
+        }
+      }
+
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const err = Validation(name, email, password);
+        console.log(age);
+        
+        const err = Validation(name, email, password,age);
+        if (!image){
+            err.image = "Please upload a profile image"
+        }
         if (Object.keys(err).length > 0){
             setErrors(err);
             console.log(err);
@@ -35,10 +44,14 @@ function Signup ({ onSignup }) {
             const newUser = {
                 name: name,
                 email: email,
-                password: password
+                password: password,
+                age: age,
+                image: image
+
             };
             if (Array.isArray(users)){
                 users.push(newUser);
+                console.log(users[0])
                 /*onSignup(newUser);
                 */
                 //setValues({ name: "", email: "", password: "" });
@@ -75,6 +88,24 @@ function Signup ({ onSignup }) {
                             onChange={(event)=> setPassword(event.target.value)} className="form-control rounded-0" />
                         {errors.password && <span className="text-danger"> {errors.password}</span>}
                     </div>
+                    <div className="mb-3">
+                        <label htmlFor="age"><strong>Age</strong></label>
+                        <input type="number" placeholder="Enter Age" name="age" value={age} onChange={(event) => setAge(event.target.value)} className="form-control rounded-0" />
+                        {errors.age && <span className="text-danger"> {errors.age}</span>}
+                    </div>
+                    <label htmlFor="image">
+                        <b>Upload Profile Image</b>
+                    </label>
+                    <input
+                        type="file"
+                        className="filetype"
+                        id="group_image"
+                        name="image"
+                        accept="image/x-png,image/gif,image/jpeg"
+                        onChange={handleImageChange}
+                        
+                    />
+                    {errors.image && <span className="text-danger"> {errors.image}</span>}
                     <button type='submit' className="btn btn-success w-100"><strong>Sign up</strong> </button>
                     <p> You are agree to our terms and policies</p>
                     <Link to="/login" className="btn btn-default border w-100 bg-light rounded-0 text-decoration-none"> Log in</Link>
