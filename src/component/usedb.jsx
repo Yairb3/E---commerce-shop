@@ -23,6 +23,7 @@ export function DataProvider({children}) {
           setData(await response.clone().json());
           setFilter(await response.json());
       };
+      debugger
       getProducts();
     }, []);
 
@@ -51,9 +52,11 @@ useEffect(() => {
 
     const [currentUser, setCurrentUser] = useState("")
     const [currentName, setCurrentName, ] = useState("")
+    const [currentAge, setCurrentAge ] = useState("")
+    const [currentImage, setCurrentImage ] = useState("")
 
     return (<DataContext.Provider value=
-    {{data, setData,id, setId,filter,idToProduct, setIdToProduct, setFilter, userIdToProducts, productIdToUser, isLoggedIn, setIsLoggedIn,currentUser, currentName,setCurrentUser,setCurrentName}}>
+    {{data, setData,id, setId,filter,idToProduct,currentAge, setCurrentAge,currentImage, setCurrentImage, setIdToProduct, setFilter, userIdToProducts, productIdToUser, isLoggedIn, setIsLoggedIn,currentUser, currentName,setCurrentUser,setCurrentName}}>
         {children}
         </DataContext.Provider>);
 }

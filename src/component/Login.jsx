@@ -11,7 +11,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   //const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const { isLoggedIn, setIsLoggedIn,currentUser, setCurrentUser, currentName, setCurrentName} = useContext(DataContext)
+  const { isLoggedIn, setIsLoggedIn,currentAge, setCurrentAge,currentUser, setCurrentUser,currentImage, setCurrentImage, currentName, setCurrentName} = useContext(DataContext)
   const history = useHistory();
 
 
@@ -32,13 +32,16 @@ const Login = () => {
           const matchedUser = users.find(
               (user) => user.email === email && user.password === password
             );
+            console.log(matchedUser);
         
             if (matchedUser) {
               console.log("Logged in as", matchedUser.name);
               setIsLoggedIn(true);
               setCurrentUser(matchedUser.email);
               setCurrentName( matchedUser.name);
-              console.log(isLoggedIn);
+              setCurrentImage(matchedUser.image);
+              setCurrentAge(matchedUser.age);
+              console.log(currentAge);
               history.push("/"); // Redirect to cart page if the user is authenticated
             } else {
               setErrors({ email: "Incorrect email or password" });

@@ -1,4 +1,4 @@
-function Validation(name, email, password) {
+function Validation(name, email, password,age) {
     let error = {}
     const email_pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     const password_pattern=/^([@#](?=[^aeiou]{7,13}$)(?=[[:alnum:]]{7,13}$)(?=.*[A-Z]{1,}.*$).+)$/
@@ -40,6 +40,9 @@ function Validation(name, email, password) {
         error.password="At least one Special Characters";
     }else if(!minLengthPassword){
         error.password="At least minumum 8 characters";
+    }
+    if(age === ""){
+        error.age= "Age should not be empty"
     }
       
     
