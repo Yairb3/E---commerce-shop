@@ -4,7 +4,7 @@ import DataContext, { Category }from "./usedb";
 import emailjs from "emailjs-com";
 
 const AddNewItemForm = () => {
-  const { data, setData, id, setId, idToProduct} = useContext(
+  const { data, setData } = useContext(
     DataContext
   );
 
@@ -20,8 +20,14 @@ const AddNewItemForm = () => {
   };
 
   function handleImageChange(event) {
-    if (event.target.files && event.target.files[0]) {
-      setImage(URL.createObjectURL(event.target.files[0]));
+    const image = event.target.files[0];
+    if (image) {
+      const reader = new FileReader();
+      reader.readAsDataURL(image);
+      reader.addEventListener('load', () => {
+        setImage(reader.result);
+      })
+
     }
   }
 
@@ -33,8 +39,22 @@ const AddNewItemForm = () => {
     return isValid;
   };
 
+  const getNewId = () => {
+    const currData = JSON.parse(window.localStorage.getItem('DATA'))
+    if(currData.length === 0){
+      return 21
+    }
+    else {
+      const currId = currData[currData.length - 1].id
+      return currId + 1
+
+    }
+
+  }
+
   const handleUploadClick = () => {
     if (validateFields()) {
+      const id = getNewId()
       const newItem = {
         email,
         image,
@@ -45,14 +65,19 @@ const AddNewItemForm = () => {
         rating: {count: 0, rate: 0},
         id,
       };
+      const idToProduct = JSON.parse(window.localStorage.getItem('ID_TO_PRODUCT'))
+      const currData = JSON.parse(window.localStorage.getItem('DATA'))
+      currData.push(newItem)
       idToProduct[id] = newItem;
+      window.localStorage.setItem('ID_TO_PRODUCT', JSON.stringify(idToProduct));
+      window.localStorage.setItem('DATA', JSON.stringify(currData));
+      setData(currData)
       emailjs.send(
         "service_pq206ba",
         "template_wgr42dq",
         newItem,
         "7EL9yGfRLnRx5EzQ8",
       )
-      setId(id + 1)
       data.push(newItem)
       setData(data)
       closeForm();
@@ -60,96 +85,97 @@ const AddNewItemForm = () => {
   };
 
   return (
-    <div>
-      <div className="form-popup" id="myForm">
-        <form
-          className="form-container"
-          style={{ width: "100%" }}
-        >
-          <h1>Add New Item</h1>
-          <label htmlFor="email">
-            <b>Email</b>
-          </label>
-          <input
-            type="text"
-            placeholder="Enter Email"
-            name="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+<div>
+  <div className="form-popup" id="myForm"  >
+    <form className="form-container" style={{ width: "100%" }}>
+      <h1>Add New Item</h1>
+      <label htmlFor="email">
+        <b>Email: </b>
+      </label>
+      <input
+        type="text"
+        placeholder="Enter Email"
+        name="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        required
+      />
 
-          <label htmlFor="image">
-            <b>Upload Image</b>
-          </label>
-          <input
-            type="file"
-            className="filetype"
-            id="group_image"
-            name="image"
-            accept="image/x-png,image/gif,image/jpeg"
-            onChange={handleImageChange}
-          />
-            <label htmlFor="title">
-            <b>Title</b>
-          </label>
-          <textarea
-            rows="1"
-            cols="30"
-            name="title"
-            form="usrform"
-            placeholder="Enter Title here..."
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
+      <label htmlFor="title">
+        <b>Title: </b>
+      </label>
+      <textarea
+        rows="1"
+        cols="30"
+        name="title"
+        form="usrform"
+        placeholder="Enter Title here..."
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+      />
 
-          <label htmlFor="description">
-            <b>Item Description</b>
-          </label>
-          <textarea
-            rows="4"
-            cols="30"
-            name="description"
-            form="usrform"
-            placeholder="Enter Your Description Here"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
+      <label htmlFor="description">
+        <b>Item Description: </b>
+      </label>
+      <textarea
+        rows="4"
+        cols="30"
+        name="description"
+        form="usrform"
+        placeholder="Enter Your Description Here"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+      />
 
-          <label htmlFor="price">
-            <b>Price</b>
-          </label>
-          <input
-            type="number"
-            min="0"
-            max="10000"
-            step="1"
-            name="price"
+      <label>
+        <b>Price: </b>
+      </label>
+      <input
+        id="number"
+        type="number"
+        min="0"
+        max="10000"
+        step="1"
+        name="price"
+        value={price}
+        onChange={(e) => setPrice(e.target.value)}
+        required
+      />
 
-            id="price"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-            required
-          />
-          <label htmlFor="category">
-            <b>Category</b>
-          </label>
-          <select value={itemCategory} onChange={(e) => setItemCategory(e.target.value)}>
-            <option value={Category.All}>All</option>
-            <option value={Category.MensClothing}>Men's Clothing</option>
-            <option value={Category.WomensClothing}>Women's Clothing</option>
-            <option value={Category.Jewelery}>Jewelry</option>
-          </select>
+      <label htmlFor="category" style={{ width: "100%" }}>
+        <b>Category: </b>
+      </label>
+      <select
+        value={itemCategory}
+        onChange={(e) => setItemCategory(e.target.value)}
+      >
+        <option value={Category.All}>All</option>
+        <option value={Category.MensClothing}>Men's Clothing</option>
+        <option value={Category.WomensClothing}>Women's Clothing</option>
+        <option value={Category.Jewelery}>Jewelry</option>
+      </select>
 
-          <button type="button" className="btn" onClick={handleUploadClick}>
-            Upload
-          </button>
-          <button type="button" className="btn cancel" onClick={closeForm}>
-          Close
-        </button>
-      </form>
-    </div>
+      <label htmlFor="image" style={{ width: "100%" }}>
+        <b>Upload Imag: </b>
+      </label>
+      <input
+        type="file"
+        className="filetype"
+        id="group_image"
+        name="image"
+        accept="image/x-png,image/gif,image/jpeg"
+        onChange={handleImageChange}
+      />
+
+      <button type="button" className="btn" onClick={handleUploadClick}>
+        Upload
+      </button>
+      <button type="button" className="btn cancel" onClick={closeForm}>
+        Close
+      </button>
+    </form>
   </div>
+</div>
 );
 
 };

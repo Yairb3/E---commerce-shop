@@ -3,16 +3,9 @@ import { Link, useHistory } from "react-router-dom";
 import Validation from "./Signupvalidation";
 import users from "./Users"; // Import the users array
 
-
 function Signup ({ onSignup }) {
 
     const history = useHistory();
-
-    // const [values, setValues] = useState({
-    //     name: '',
-    //     email: '',
-    //     password: ''
-    // });
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
@@ -29,7 +22,6 @@ function Signup ({ onSignup }) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(age);
         
         const err = Validation(name, email, password,age);
         if (!image){
@@ -40,21 +32,16 @@ function Signup ({ onSignup }) {
             console.log(err);
         }
         else {
-
             const newUser = {
                 name: name,
                 email: email,
                 password: password,
                 age: age,
                 image: image
-
             };
             if (Array.isArray(users)){
                 users.push(newUser);
                 console.log(users[0])
-                /*onSignup(newUser);
-                */
-                //setValues({ name: "", email: "", password: "" });
                 setEmail("");
                 setName("");
                 setPassword("");

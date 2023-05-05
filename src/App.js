@@ -1,11 +1,8 @@
 import "./App.css";
-import React, { useState } from "react";
-
 import Home from "./component/Home";
 import Navbar from "./component/Navbar";
 import { Switch, Route} from "react-router-dom";
 import Products from "./component/Products";
-import Logo from './component/Logo';
 import Product from "./component/Product";
 import Cart from "./component/Cart";
 import About from "./component/About";

@@ -9,54 +9,63 @@ export const Category = {
 }
 
 export function DataProvider({children}) {
-    const [id, setId] = useState(0)
+    const [loading, setLoading] = useState(true)
     const [data, setData] = useState([])
+    const [staticData, setStaticData] = useState([])
     const [filter, setFilter] = useState([])
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
     const userIdToProducts = {}
     const productIdToUser = {}
-    const [idToProduct, setIdToProduct] = useState({})
 
     useEffect(() => {
       const getProducts = async () => {
+        setLoading(true)
         const response = await fetch("https://fakestoreapi.com/products");
-          setData(await response.clone().json());
-          setFilter(await response.json());
+        setStaticData(await response.clone().json());
       };
-      debugger
       getProducts();
     }, []);
 
 useEffect(() => {
-  const myData = window.localStorage.getItem('DATA')
-  if(myData){
-    setData(JSON.parse(myData))
+  const dynamicData = JSON.parse(window.localStorage.getItem('DATA'))
+    setData(staticData.concat(dynamicData))
+    setLoading(false)
+}, [loading, staticData])
+
+
+useEffect(() => {
+  if(!(window.localStorage.getItem('DATA'))){
+    window.localStorage.setItem('DATA', JSON.stringify([]))
+  }
+  if(!(window.localStorage.getItem('ID_TO_PRODUCT')) && staticData.length > 0){
+    const idToProduct = {}
+    staticData.forEach(item => idToProduct[item.id] = item)
+    window.localStorage.setItem('ID_TO_PRODUCT', JSON.stringify(idToProduct))
+  }
+  if(!(window.localStorage.getItem('IS_LOGGED_IN'))){
+    window.localStorage.setItem('IS_LOGGED_IN', false)
+  }
+  if(!(window.localStorage.getItem('CURREN_USER'))){
+    window.localStorage.setItem('CURREN_USER', null)
+  }
+}, [loading, staticData])
+
+const [currentName, setCurrentName, ] = useState("")
+const [currentAge, setCurrentAge ] = useState("")
+const [currentImage, setCurrentImage ] = useState("")
+
+useEffect(() => {
+  const currentUser = JSON.parse(window.localStorage.getItem('CURRENT_USER'))
+  if(currentUser){
+    setCurrentName(currentUser.name)
+    setCurrentAge(currentUser.age)
+    setCurrentImage(currentUser.image)
   }
 }, [])
 
-useEffect(() => {
-    window.localStorage.setItem('DATA', JSON.stringify(data))
-}, [data])
 
-
-    // useEffect(() => {
-    //     window.localStorage.setItem('FILTER', filter)
-    // }, [filter])
-
-    // useEffect(() => {
-    //     const myFilter = window.localStorage.getItem('FILTER')
-    //     setData(myFilter)
-    // }, [data])
-
-
-
-    const [currentUser, setCurrentUser] = useState("")
-    const [currentName, setCurrentName, ] = useState("")
-    const [currentAge, setCurrentAge ] = useState("")
-    const [currentImage, setCurrentImage ] = useState("")
 
     return (<DataContext.Provider value=
-    {{data, setData,id, setId,filter,idToProduct,currentAge, setCurrentAge,currentImage, setCurrentImage, setIdToProduct, setFilter, userIdToProducts, productIdToUser, isLoggedIn, setIsLoggedIn,currentUser, currentName,setCurrentUser,setCurrentName}}>
+    {{data, setData, loading,filter,currentAge, setCurrentAge,currentImage, setCurrentImage, setFilter, userIdToProducts, productIdToUser, currentName,setCurrentName}}>
         {children}
         </DataContext.Provider>);
 }
