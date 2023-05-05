@@ -44,7 +44,6 @@ const Products = () => {
   }
 
   const ShowProducts = () => {
-    console.log("%o", {data, loading})
     return (
       <>
         <div className="buttons d-flex justify-content-center mb-5 pb-5">

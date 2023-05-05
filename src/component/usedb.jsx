@@ -38,7 +38,6 @@ useEffect(() => {
   }
   if(!(window.localStorage.getItem('ID_TO_PRODUCT')) && staticData.length > 0){
     const idToProduct = {}
-    console.log("%o", {staticData})
     staticData.forEach(item => idToProduct[item.id] = item)
     window.localStorage.setItem('ID_TO_PRODUCT', JSON.stringify(idToProduct))
   }

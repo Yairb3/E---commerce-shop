@@ -9,7 +9,6 @@ const Navbar = () => {
   
     const state = useSelector((state)=> state.handleCart)
     const isLoggedIn = JSON.parse(window.localStorage.getItem('IS_LOGGED_IN'));
-    console.log("log: ", isLoggedIn)
     const { currentName } = useContext(DataContext)
     const history = useHistory();
     function handleLogout() {

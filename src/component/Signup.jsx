@@ -22,7 +22,6 @@ function Signup ({ onSignup }) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(age);
         
         const err = Validation(name, email, password,age);
         if (!image){

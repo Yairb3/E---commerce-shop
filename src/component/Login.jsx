@@ -32,7 +32,6 @@ const Login = () => {
               (user) => user.email === email && user.password === password
             );
             if (matchedUser) {
-              console.log("Logged in as", matchedUser.name);
               window.localStorage.setItem('IS_LOGGED_IN', true);
                 window.localStorage.setItem('CURRENT_USER', JSON.stringify(matchedUser))
               setCurrentName( matchedUser.name);

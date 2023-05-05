@@ -25,7 +25,6 @@ const AddNewItemForm = () => {
       const reader = new FileReader();
       reader.readAsDataURL(image);
       reader.addEventListener('load', () => {
-        console.log("%o", {image: reader.result})
         setImage(reader.result);
       })
 
@@ -42,9 +41,7 @@ const AddNewItemForm = () => {
 
   const getNewId = () => {
     const currData = JSON.parse(window.localStorage.getItem('DATA'))
-    console.log("%o", {currData})
     if(currData.length === 0){
-      console.log("hi")
       return 21
     }
     else {
@@ -68,7 +65,6 @@ const AddNewItemForm = () => {
         rating: {count: 0, rate: 0},
         id,
       };
-      console.log("ID: ", id)
       const idToProduct = JSON.parse(window.localStorage.getItem('ID_TO_PRODUCT'))
       const currData = JSON.parse(window.localStorage.getItem('DATA'))
       currData.push(newItem)
