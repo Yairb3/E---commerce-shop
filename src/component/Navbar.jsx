@@ -1,29 +1,30 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Logo from './Logo';
 import DataContext from "./usedb";
 
 
-const Navbar = ({}) => {
+const Navbar = () => {
   
     const state = useSelector((state)=> state.handleCart)
-    const { isLoggedIn, setIsLoggedIn,currentUser, setCurrentUser, currentName, setCurrentName} = useContext(DataContext)
+    const isLoggedIn = JSON.parse(window.localStorage.getItem('IS_LOGGED_IN'));
+    console.log("log: ", isLoggedIn)
+    const { currentName } = useContext(DataContext)
     const history = useHistory();
     function handleLogout() {
       const confirmLogout = window.confirm("Are you sure you want to log out?");
       if (confirmLogout){
-      setIsLoggedIn(false);
-      
-      // Redirect to the home page
-      history.push('/');
+        window.localStorage.setItem('IS_LOGGED_IN', false);
+        // Redirect to the home page
+        history.push('/');
       }
     }
 
     function handleCart() {
       const confirmLogout = window.confirm("Are you sure you want to log out?");
       if (confirmLogout){
-      setIsLoggedIn(false);
+        window.localStorage.setItem('IS_LOGGED_IN', false);
       
       // Redirect to the home page
       history.push('/');

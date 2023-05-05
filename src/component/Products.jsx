@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import Skeleton from "react-loading-skeleton";
 import DataContext from "./usedb";
 import Items from "./Items";
@@ -8,8 +8,8 @@ import AddNewItemForm from "./AddNewItemForm";
 
 
 const Products = () => {
-  const {data, setFilter, isLoggedIn} = useContext(DataContext)
-  const [loading, setLoading] = useState(false);
+  const isLoggedIn = JSON.parse(window.localStorage.getItem('IS_LOGGED_IN'))
+  const {data, setFilter, loading} = useContext(DataContext)
 
   const Loading = () => {
     return (
@@ -44,6 +44,7 @@ const Products = () => {
   }
 
   const ShowProducts = () => {
+    console.log("%o", {data, loading})
     return (
       <>
         <div className="buttons d-flex justify-content-center mb-5 pb-5">

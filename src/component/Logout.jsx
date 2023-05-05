@@ -1,6 +1,5 @@
-import React, { useState, useContext } from "react";
-import DataContext from "./usedb";
-import { Link, useHistory } from "react-router-dom";
+import React from "react";
+import { useHistory } from "react-router-dom";
 
 
 
@@ -9,13 +8,9 @@ import { Link, useHistory } from "react-router-dom";
 
 const Logout = () => {
     const history = useHistory();
-
-    const { isLoggedIn, setIsLoggedIn,currentUser, setCurrentUser} = useContext(DataContext)
-
     const handleLogout = (event) => {
-    isLoggedIn=false;
+      window.localStorage.setItem('IS_LOGGED_IN', false);
     history.push("/");
-
         }
   return (
     <button onClick={handleLogout} className="btn btn-primary">
