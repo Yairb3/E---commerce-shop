@@ -15,6 +15,7 @@ const Navbar = () => {
       const confirmLogout = window.confirm("Are you sure you want to log out?");
       if (confirmLogout){
         window.localStorage.setItem('IS_LOGGED_IN', false);
+        window.localStorage.setItem('CURRENT_USER', null);
         // Redirect to the home page
         history.push('/');
       }

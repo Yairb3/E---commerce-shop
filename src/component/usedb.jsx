@@ -44,8 +44,8 @@ useEffect(() => {
   if(!(window.localStorage.getItem('IS_LOGGED_IN'))){
     window.localStorage.setItem('IS_LOGGED_IN', false)
   }
-  if(!(window.localStorage.getItem('CURREN_USER'))){
-    window.localStorage.setItem('CURREN_USER', null)
+  if(!(window.localStorage.getItem('CURRENT_USER'))){
+    window.localStorage.setItem('CURRENT_USER', null)
   }
 }, [loading, staticData])
 
