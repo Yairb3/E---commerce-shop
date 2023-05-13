@@ -21,16 +21,6 @@ const Navbar = () => {
       }
     }
 
-    function handleCart() {
-      const confirmLogout = window.confirm("Are you sure you want to log out?");
-      if (confirmLogout){
-        window.localStorage.setItem('IS_LOGGED_IN', false);
-      
-      // Redirect to the home page
-      history.push('/');
-      }
-    }
-
   return (
     
     <div>
