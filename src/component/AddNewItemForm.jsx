@@ -4,7 +4,7 @@ import DataContext, { Category }from "./usedb";
 import emailjs from "emailjs-com";
 
 const AddNewItemForm = () => {
-  const { data, setData } = useContext(
+  const { data } = useContext(
     DataContext
   );
 
@@ -40,17 +40,9 @@ const AddNewItemForm = () => {
   };
 
   const getNewId = () => {
-    const currData = JSON.parse(window.localStorage.getItem('DATA'))
-    if(currData.length === 0){
-      return 21
+    const currId = data[data.length - 1].id
+    return currId + 1
     }
-    else {
-      const currId = currData[currData.length - 1].id
-      return currId + 1
-
-    }
-
-  }
 
   const handleUploadClick = () => {
     if (validateFields()) {
@@ -65,21 +57,22 @@ const AddNewItemForm = () => {
         rating: {count: 0, rate: 0},
         id,
       };
+      fetch('http://localhost:5000/item', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newItem)
+      })
       const idToProduct = JSON.parse(window.localStorage.getItem('ID_TO_PRODUCT'))
-      const currData = JSON.parse(window.localStorage.getItem('DATA'))
-      currData.push(newItem)
       idToProduct[id] = newItem;
       window.localStorage.setItem('ID_TO_PRODUCT', JSON.stringify(idToProduct));
-      window.localStorage.setItem('DATA', JSON.stringify(currData));
-      setData(currData)
       emailjs.send(
         "service_pq206ba",
         "template_wgr42dq",
         newItem,
         "7EL9yGfRLnRx5EzQ8",
       )
-      data.push(newItem)
-      setData(data)
       closeForm();
     }
   };

@@ -11,34 +11,28 @@ export const Category = {
 export function DataProvider({children}) {
     const [loading, setLoading] = useState(true)
     const [data, setData] = useState([])
-    const [staticData, setStaticData] = useState([])
     const [filter, setFilter] = useState([])
     const userIdToProducts = {}
     const productIdToUser = {}
 
+
+
     useEffect(() => {
       const getProducts = async () => {
         setLoading(true)
-        const response = await fetch("https://fakestoreapi.com/products");
-        setStaticData(await response.clone().json());
+        const response = await fetch('http://localhost:5000/item');
+        setData(await response.clone().json());
+        setLoading(false)
       };
       getProducts();
     }, []);
 
-useEffect(() => {
-  const dynamicData = JSON.parse(window.localStorage.getItem('DATA'))
-    setData(staticData.concat(dynamicData))
-    setLoading(false)
-}, [loading, staticData])
 
 
 useEffect(() => {
-  if(!(window.localStorage.getItem('DATA'))){
-    window.localStorage.setItem('DATA', JSON.stringify([]))
-  }
-  if(!(window.localStorage.getItem('ID_TO_PRODUCT')) && staticData.length > 0){
+  if(!(window.localStorage.getItem('ID_TO_PRODUCT')) && data.length > 0){
     const idToProduct = {}
-    staticData.forEach(item => idToProduct[item.id] = item)
+    data.forEach(item => idToProduct[item.id] = item)
     window.localStorage.setItem('ID_TO_PRODUCT', JSON.stringify(idToProduct))
   }
   if(!(window.localStorage.getItem('IS_LOGGED_IN'))){
@@ -47,7 +41,7 @@ useEffect(() => {
   if(!(window.localStorage.getItem('CURRENT_USER'))){
     window.localStorage.setItem('CURRENT_USER', null)
   }
-}, [loading, staticData])
+}, [data, loading])
 
 const [currentName, setCurrentName, ] = useState("")
 const [currentAge, setCurrentAge ] = useState("")
