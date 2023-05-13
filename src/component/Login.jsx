@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import Validation from "./Loginvalidation";
-import users from "./Users"; // Import the users array1!
 import DataContext from "./usedb";
 
 const Login = () => {
@@ -10,14 +9,9 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
-  const { setCurrentAge, setCurrentImage, setCurrentName} = useContext(DataContext)
+  const { users ,setCurrentAge, setCurrentImage, setCurrentName} = useContext(DataContext)
   const history = useHistory();
 
-
-  
-  
-
-  
   const handleSubmit = (event) => {
     event.preventDefault();
     const err = Validation(email , password);
@@ -33,7 +27,7 @@ const Login = () => {
             );
             if (matchedUser) {
               window.localStorage.setItem('IS_LOGGED_IN', true);
-                window.localStorage.setItem('CURRENT_USER', JSON.stringify(matchedUser))
+              window.localStorage.setItem('CURRENT_USER', JSON.stringify(matchedUser))
               setCurrentName( matchedUser.name);
               setCurrentImage(matchedUser.image);
               setCurrentAge(matchedUser.age);
@@ -43,8 +37,7 @@ const Login = () => {
             }
           };
     }
-
-    }
+  }
    
 
   return (
