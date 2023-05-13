@@ -85,6 +85,28 @@ def get_item_by_id(item_id):
     # if no matching item was found, return None
     return None
 
+##############################################################################################################
+# functions for the user list
+def get_all_users():
+    # load the items from the file
+    with open('src/backend/users.json', 'r') as f:
+        users = json.load(f)
+
+    # return the items as a list
+    return users
+
+def add_new_user(user):
+    # load the current items from the file
+    with open('src/backend/users.json', 'r') as f:
+        users = json.load(f)
+
+    # add the new item to the list
+    users.append(user)
+
+    # write the updated items to the file
+    with open('src/backend/users.json', 'w') as f:
+        json.dump(users, f, indent=4)
+
 # endpoint to handle GET and POST requests for the item list
 @app.route('/item', methods=['GET', 'POST'])
 def handle_items():
@@ -126,6 +148,19 @@ def get_item(item_id):
         return jsonify(item)
     else:
         return 'Item not found'
+    
+#endpoint to handle GET requests for all users
+@app.route('/users', methods=['GET'])
+def get_users():
+    users = get_all_users()
+    return jsonify(users)
+
+#endpoint to handle POST requests for new user
+@app.route('/users', methods=['POST'])
+def add_user():
+    user = request.json
+    add_new_user(user)
+    return 'OK'
 
 
 if __name__ == '__main__':

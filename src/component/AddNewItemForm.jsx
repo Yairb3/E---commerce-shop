@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import "../App.css";
 import DataContext, { Category }from "./usedb";
 import emailjs from "emailjs-com";
+import { add_item } from "../databaseAPI";
 
 const AddNewItemForm = () => {
   const { data } = useContext(
@@ -57,13 +58,7 @@ const AddNewItemForm = () => {
         rating: {count: 0, rate: 0},
         id,
       };
-      fetch('http://localhost:5000/item', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(newItem)
-      })
+      add_item(newItem)
       const idToProduct = JSON.parse(window.localStorage.getItem('ID_TO_PRODUCT'))
       idToProduct[id] = newItem;
       window.localStorage.setItem('ID_TO_PRODUCT', JSON.stringify(idToProduct));

@@ -1,0 +1,16 @@
+[
+    {
+        "name": "Roee try1",
+        "email": "roeenegri@notreal.com",
+        "password": "123456",
+        "age": "27",
+        "image": "not-real.jpeg"
+    },
+    {
+        "name": "roee negri",
+        "email": "roeenegri@mail.tau.ac.il",
+        "password": "Roee123456!",
+        "age": "27",
+        "image": "blob:http://localhost:3000/3d474828-1cca-41d2-bf57-ef568bbe24d1"
+    }
+]

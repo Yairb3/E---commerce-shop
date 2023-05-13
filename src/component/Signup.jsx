@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import DataContext from "./usedb";
 import { Link, useHistory } from "react-router-dom";
 import Validation from "./Signupvalidation";
-import users from "./Users"; // Import the users array
+import { add_user } from "../databaseAPI";
 
 function Signup ({ onSignup }) {
 
@@ -12,6 +13,7 @@ function Signup ({ onSignup }) {
     const [age, setAge] = useState("");
     const [image, setImage] = useState(null);
     const [errors, setErrors] = useState({});
+    const { users, setUsers } = useContext(DataContext)
 
     function handleImageChange(event) {
         if (event.target.files && event.target.files[0]) {
@@ -40,13 +42,12 @@ function Signup ({ onSignup }) {
                 image: image
             };
             if (Array.isArray(users)){
-                users.push(newUser);
-                console.log(users[0])
+                add_user(newUser)
+                setUsers(users.push(newUser));
                 setEmail("");
                 setName("");
                 setPassword("");
                 history.push("/login");
-
             }
     }
     };
