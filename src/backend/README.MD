@@ -10,8 +10,10 @@ If you have some questions or you need me to add more functionalities, feel free
 
 ### get all items
 
-`const response = await fetch('http://localhost:5000/item')`
-`const all_data = response.json()`
+```
+const response = await fetch('http://localhost:5000/item')
+const all_data = response.json()
+```
 
 ### delete item by id:
 Note - the id in the first line need to be the id of the item that we want to delete.
