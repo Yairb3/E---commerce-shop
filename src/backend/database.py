@@ -65,7 +65,7 @@ def modify_item(item_id, new_item):
 # function to get all items in the item list
 def get_all_items():
     # load the items from the file
-    with open('src/backend/item.json', 'r') as f:
+    with open('src/backend/item.json', 'r') as f: 
         items = json.load(f)
 
     # return the items as a list
@@ -94,6 +94,15 @@ def get_all_users():
 
     # return the items as a list
     return users
+
+def get_all_ratings():
+     # load the ratings from the file
+    with open('src/backend/ratings.json', 'r') as f:
+        ratings = json.load(f)
+
+    # return the items as a list
+    return ratings
+    
 
 def add_new_user(user):
     # load the current items from the file
@@ -154,13 +163,27 @@ def get_item(item_id):
 def get_users():
     users = get_all_users()
     return jsonify(users)
-
 #endpoint to handle POST requests for new user
 @app.route('/users', methods=['POST'])
 def add_user():
     user = request.json
     add_new_user(user)
     return 'OK'
+
+#endpoint to handle GET requests for all users
+@app.route('/ratings', methods=['GET'])
+def get_ratings():
+    ratings = get_all_ratings()
+    return jsonify(ratings)
+
+@app.route('/ratings', methods=['POST'])
+def update_ratings():
+    ratings = request.json
+    # update ratings
+    with open('src/backend/ratings.json', 'w') as f:
+        json.dump(ratings, f, indent=4)
+    return 'OK'
+
 
 
 if __name__ == '__main__':

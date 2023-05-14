@@ -63,6 +63,15 @@ export const get_all_users = async () => {
     return data;
 }
 
+export const get_ratings = async () => {
+  const response = await fetch('http://localhost:5000/ratings')
+  const data = await response.json();
+  console.log(data);
+
+  return data;
+}
+
+
 export const add_user = async (user) => {
     await fetch('http://localhost:5000/users', {
         method: 'POST',
@@ -77,4 +86,21 @@ export const add_user = async (user) => {
           console.error('User not added');
         }
       });
+}
+export const update_ratings = async (ratings) => {
+  console.log(ratings);
+  await fetch('http://localhost:5000/ratings', {
+    method: 'POST',
+    headers:{
+      'Content-Type' : 'application/json',
+    },
+    body : JSON.stringify(ratings),
+  }).then(response =>{
+    if(response.ok){
+      console.log('Raitings updated successfully');
+    }
+    else{
+    console.log('Problem at update rating');
+    }
+  });
 }
