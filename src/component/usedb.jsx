@@ -1,5 +1,5 @@
 import {createContext, useState, useEffect} from "react";
-import { get_all_items, get_all_users } from "../databaseAPI";
+import { get_all_items, get_all_users , get_ratings} from "../databaseAPI";
 
 const DataContext = createContext();
 export const Category = {
@@ -36,6 +36,7 @@ export function DataProvider({children}) {
       };
       getUsers();
     }, []);
+    
 
 
 
@@ -56,6 +57,16 @@ useEffect(() => {
 const [currentName, setCurrentName, ] = useState("")
 const [currentAge, setCurrentAge ] = useState("")
 const [currentImage, setCurrentImage ] = useState("")
+const [ratings, setRatings] = useState({});
+
+useEffect(() => {
+  const getRatings = async () => {
+    const ratings = await get_ratings()
+    console.log(ratings);
+    setRatings(ratings);
+  };
+  getRatings();
+}, {});
 
 useEffect(() => {
   const currentUser = JSON.parse(window.localStorage.getItem('CURRENT_USER'))
@@ -69,7 +80,7 @@ useEffect(() => {
 
 
     return (<DataContext.Provider value=
-    {{data, setData,users, setUsers, loading,filter,currentAge, setCurrentAge,currentImage, setCurrentImage, setFilter, userIdToProducts, productIdToUser, currentName,setCurrentName}}>
+    {{data, setData,users, setUsers,ratings, setRatings,loading,filter,currentAge, setCurrentAge,currentImage, setCurrentImage, setFilter, userIdToProducts, productIdToUser, currentName,setCurrentName}}>
         {children}
         </DataContext.Provider>);
 }

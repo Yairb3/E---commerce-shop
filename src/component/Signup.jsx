@@ -13,7 +13,7 @@ function Signup ({ onSignup }) {
     const [age, setAge] = useState("");
     const [image, setImage] = useState(null);
     const [errors, setErrors] = useState({});
-    const { users, setUsers } = useContext(DataContext)
+    const { users, setUsers } = useContext(DataContext);
 
     function handleImageChange(event) {
         if (event.target.files && event.target.files[0]) {
