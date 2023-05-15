@@ -1,10 +1,13 @@
 import React from "react";
+import PopularItems from './Popular_Items';
 import background from '../images/image.jpg';
 
 
 const Home = () => {
   return (
+    
     <div className="hero">
+      
       
       <div className="card  text-white border-0">
         <img src={background} className="card-img" alt="Background" height="450px" />
@@ -16,8 +19,11 @@ const Home = () => {
             CHECK OUT ALL THE TRENDS
           </p>
             </div>
+            
         </div>
       </div>
+      <PopularItems/>
+
     </div>
   );
 };

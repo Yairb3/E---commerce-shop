@@ -62,11 +62,10 @@ const [ratings, setRatings] = useState({});
 useEffect(() => {
   const getRatings = async () => {
     const ratings = await get_ratings()
-    console.log(ratings);
     setRatings(ratings);
   };
   getRatings();
-}, {});
+}, []);
 
 useEffect(() => {
   const currentUser = JSON.parse(window.localStorage.getItem('CURRENT_USER'))

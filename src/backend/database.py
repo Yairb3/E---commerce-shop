@@ -179,7 +179,7 @@ def get_ratings():
 @app.route('/ratings', methods=['POST'])
 def update_ratings():
     ratings = request.json
-    # update ratings
+    print(ratings)
     with open('src/backend/ratings.json', 'w') as f:
         json.dump(ratings, f, indent=4)
     return 'OK'

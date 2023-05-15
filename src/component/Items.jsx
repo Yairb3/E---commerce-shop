@@ -15,8 +15,8 @@ const Items = () => {
       ]
 
     }));
-    console.log(rating[productId]);
 
+    
    
     update_ratings(ratings); // pass the updated ratings instead of prevRatings
   };
