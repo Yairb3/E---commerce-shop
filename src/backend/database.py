@@ -176,12 +176,20 @@ def get_ratings():
     ratings = get_all_ratings()
     return jsonify(ratings)
 
+
+
 @app.route('/ratings', methods=['POST'])
-def update_ratings():
-    ratings = request.json
-    print(ratings)
+def update_score():
+    productid = request.json['productid']
+    rating = request.json['rating']
+    with open('src/backend/ratings.json', 'r') as f:
+        temp_ratings = json.load(f)
+    if str(productid) in temp_ratings:
+        temp_ratings[str(productid)] += rating
+    else:
+        temp_ratings[str(productid)] = rating
     with open('src/backend/ratings.json', 'w') as f:
-        json.dump(ratings, f, indent=4)
+        json.dump(temp_ratings, f, indent=4)
     return 'OK'
 
 
