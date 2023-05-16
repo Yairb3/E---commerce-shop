@@ -9,7 +9,7 @@ const PopularItems = () => {
   // Create an array of objects that represent each item, including its id and sum score
   const items = Object.keys(ratings).map((id) => ({
     id: id,
-    sumScore: ratings[id][1],
+    sumScore: ratings[id],
   }));
 
   // Sort the array by sum score in descending order

@@ -104,3 +104,20 @@ export const update_ratings = async (ratings) => {
     }
   });
 }
+
+export const update_score = async (productid, rating) => {
+  await fetch('http://localhost:5000/ratings', {
+    method: 'POST',
+    headers:{
+      'Content-Type' : 'application/json',
+    },
+    body : JSON.stringify({productid: productid, rating: rating}),
+  }).then(response =>{
+    if(response.ok){
+      console.log('Raitings updated successfully');
+    }
+    else{
+    console.log('Problem at update rating');
+    }
+  });
+}

@@ -1,24 +1,24 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext  } from 'react';
 import { NavLink } from "react-router-dom";
 import DataContext from "./usedb";
-import { update_ratings } from "../databaseAPI";
+import { update_ratings , update_score} from "../databaseAPI";
 
 const Items = () => {
+  
   const {ratings, setRatings} = useContext(DataContext);
-  // ratings is looks like: {id1: [currentRating, SumScoreOfItem],id2: [currentRating, SumScoreOfItem]...}
+  const [tempratings, setTempRatings] = useState({});
+  // ratings is looks like: {id1: SumScoreOfItem],id2: [SumScoreOfItem]...}
   const handleRatingChange = (productId, rating) => {
-    setRatings(prevRatings => ({
+    setTempRatings(prevRatings => ({
       ...prevRatings,
       [productId]: [
         rating,
         (prevRatings[productId] ? prevRatings[productId][1] : 0) + rating
       ]
-
     }));
-
-    
-   
-    update_ratings(ratings); // pass the updated ratings instead of prevRatings
+    console.log('sss', tempratings[productId]);
+    update_score(productId,rating);
+    //update_ratings(ratings); // pass the updated ratings instead of prevRatings
   };
 
 
@@ -41,7 +41,7 @@ const Items = () => {
                       <span
                         key={i}
                         className="fa fa-star"
-                        style={{ color: i < ratings[product.id]?.[0] ? 'orange' : 'gray', cursor: 'pointer' }}
+                        style={{ color: i < tempratings[product.id]?.[0] ? 'orange' : 'gray', cursor: 'pointer' }}
 
                         onClick={() => handleRatingChange(product.id, i + 1)}
                       />
