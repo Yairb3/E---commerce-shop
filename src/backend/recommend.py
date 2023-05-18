@@ -10,6 +10,9 @@ def convertJsonToMatrix():
     print(users_df,items_df)
 
 
+def weightedEvents(log)
+    l
+
 
 if __name__ == '__main__':
     convertJsonToMatrix()
