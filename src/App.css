@@ -770,4 +770,22 @@ body {
   font-size: 20px; /*change this value to your desired font size*/
 }
 
+.checkbox-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.centered-checkbox-group {
+  text-align: center;
+}
+
+.checkbox-container label {
+  margin-bottom: 20px; /* Add the desired gap between checkboxes */
+  margin-right: 20px;
+  font-size: 20px;
+  font-weight: 400;
+}
 

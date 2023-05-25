@@ -26,5 +26,12 @@
         "password": "Aa123456789!",
         "age": "25",
         "image": "blob:http://localhost:3000/034a8292-d489-4987-986c-67a6f2562c13"
+    },
+    {
+        "name": "YUVI",
+        "email": "yuvalr1997@gmail.com",
+        "password": "Yuvi208786921!",
+        "age": "25",
+        "image": "blob:http://localhost:3000/c302829b-566f-4971-a8ec-131b026f0fb8"
     }
 ]
