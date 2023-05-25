@@ -9,6 +9,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import DataContext from "./usedb";
 import { get_user_by_mail } from '../databaseAPI';
+import { FaWhatsapp } from 'react-icons/fa';
+
 
 const getSimilarProducts = (data, productId) => {
     let item_similarity = 0;
@@ -45,7 +47,7 @@ const getSimilarProducts = (data, productId) => {
   };
 
 function get_Jaccard_similarity(productId1,productId2, idToProduct){
-  if (productId1 == productId2) {
+  if (productId1 === productId2) {
     return -1;
   }
   const product1 = idToProduct[productId1];
@@ -116,6 +118,15 @@ const Product = () => {
         )
     }
     const ShowProduct = () => {
+        const initiateWhatsAppConversation = () => {
+            const phoneNumber = '+972525688627'; 
+            const message = `Hi, I'm interested in " ${product.title}" you posted in Nice2Have! Can you give me more details please?`; // Customize the initial message if needed
+            const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+              message
+            )}`;
+        
+            window.open(whatsappLink, '_blank');
+          };
         return(
         <div className="wrapper">
                 <div className='imageDiv'>
@@ -138,6 +149,10 @@ const Product = () => {
                         <button className="btn btn-outline-dark px-4 py-2" onClick={()=>addProduct(product)}>
                             Add to Cart
                         <ToastContainer />
+                        </button>
+                        <button className="btn btn-outline-dark px-4 py-2 ms-2" onClick={initiateWhatsAppConversation}>
+                            <FaWhatsapp className="me-2" />
+                            WhatsApp
                         </button>
                         <NavLink to="/cart" className="btn btn-dark ms-2 px-3 py-2">
                             Go to Cart
@@ -207,13 +222,8 @@ const Product = () => {
         )
     }
 
-    return (
-        <div>
-            {loading ? <Loading/> : <ShowProduct/>}
-        </div>
-    );
-}
+  return <div>{loading ? <Loading /> : <ShowProduct />}</div>;
+};
 
 export default Product;
-
 
