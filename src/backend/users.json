@@ -26,5 +26,12 @@
         "password": "Aa123456789!",
         "age": "25",
         "image": "blob:http://localhost:3000/034a8292-d489-4987-986c-67a6f2562c13"
+    },
+    {
+        "name": "Yuval",
+        "email": "yuval.leibovici@gmail.com",
+        "password": "Nala1234!",
+        "age": "27",
+        "image": "blob:http://localhost:3000/f5e5865c-7b58-4bb9-8441-567b0f937c14"
     }
 ]
