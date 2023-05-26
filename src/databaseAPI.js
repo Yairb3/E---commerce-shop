@@ -63,6 +63,12 @@ export const get_all_users = async () => {
     return data;
 }
 
+export const get_user_by_mail = async (mail) => {
+  const response = await fetch('http://localhost:5000/users/' + mail)
+  const user = await response.json();
+  return user;
+}
+
 export const get_ratings = async () => {
   const response = await fetch('http://localhost:5000/ratings')
   const data = await response.json();

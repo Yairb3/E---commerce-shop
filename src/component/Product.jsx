@@ -8,6 +8,7 @@ import ProfileCard from './ProfileCard';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import DataContext from "./usedb";
+import { get_user_by_mail } from '../databaseAPI';
 
 const getSimilarProducts = (data, productId) => {
     let item_similarity = 0;
@@ -17,7 +18,6 @@ const getSimilarProducts = (data, productId) => {
     let itemId1 = 0;
     let itemId2 = 0;
     let itemId3 = 0;
-    const highestScore = [0, 0, 0];
     const idToProduct = JSON.parse(window.localStorage.getItem('ID_TO_PRODUCT'))
     data.forEach(product => {
         if (!!product) {
@@ -66,8 +66,9 @@ function get_Jaccard_similarity(productId1,productId2, idToProduct){
 
 const Product = () => {
     const {id} = useParams();
-    const {data, setFilter, dataLoading} = useContext(DataContext);
+    const {data} = useContext(DataContext);
     const [product, setProduct] = useState([]);
+    const [user, setUser] = useState([]);
     const [similarProduct1, setSimilarProduct1] = useState([]);
     const [similarProduct2, setSimilarProduct2] = useState([]);
     const [similarProduct3, setSimilarProduct3] = useState([]);
@@ -83,10 +84,13 @@ const Product = () => {
             setLoading(true);
             const idToProduct = JSON.parse(window.localStorage.getItem('ID_TO_PRODUCT'))
             const product = idToProduct[id];
+            console.log(product);
             const similarProductIds = getSimilarProducts(data, product.id);
             setSimilarProduct1(idToProduct[similarProductIds[0]]);
             setSimilarProduct2(idToProduct[similarProductIds[1]]);
             setSimilarProduct3(idToProduct[similarProductIds[2]]);
+            const currentUser = await get_user_by_mail(product.email)
+            setUser(currentUser);
             setProduct(product);
             setLoading(false);
         }
@@ -197,7 +201,7 @@ const Product = () => {
                 </div>
                 </div>
                 <div overflow="none">
-                    <ProfileCard/>
+                    <ProfileCard user={user}/>
                 </div>
             </div>
         )

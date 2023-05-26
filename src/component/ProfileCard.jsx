@@ -2,16 +2,18 @@ import React from 'react';
 import "../App.css";
 import avatar from "../images/roee-n-avatar.png";
 
-function ProfileCard(props) {
+function ProfileCard(user) {
+	console.log("user", user.user.image);
 	return (
 		<div className="card-container">
 			<header>
-				<img src={avatar} alt={props.name} />
+				<img src={user.user.image} alt={user.user.name} />
 			</header>
 			<h1 className="bold-text">
-				{props.name} <span className="normal-text">27</span>
+				{user.user.name}
 			</h1>
-			<h2 className="normal-text">Tel Aviv</h2>
+			<p className="normal-text">{user.user.age}</p>
+			<p className="normal-text">Tel Aviv</p>
 			<div className="social-container">
 				<div className="followers">
 					<h1 className="bold-text">15</h1>

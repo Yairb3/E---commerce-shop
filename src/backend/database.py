@@ -102,6 +102,20 @@ def get_all_ratings():
 
     # return the items as a list
     return ratings
+
+# function to get a specific user by its mail
+def get_user_by_mail(mail):
+    # load the items from the file
+    with open('src/backend/users.json', 'r') as f:
+        users = json.load(f)
+
+    # find the user with the matching mail
+    for user in users:
+        if user['email'] == mail:
+            return user
+
+    # if no matching user was found, return None
+    return None
     
 
 def add_new_user(user):
@@ -169,6 +183,15 @@ def add_user():
     user = request.json
     add_new_user(user)
     return 'OK'
+
+# endpoint to handle GET requests for individual items by ID
+@app.route('/users/<string:user_mail>', methods=['GET'])
+def get_user(user_mail):
+    user = get_user_by_mail(user_mail)
+    if user:
+        return jsonify(user)
+    else:
+        return 'User not found'
 
 #endpoint to handle GET requests for all users
 @app.route('/ratings', methods=['GET'])
