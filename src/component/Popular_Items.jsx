@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import DataContext from './usedb';
-import Items from './Items';
 import { NavLink } from "react-router-dom";
 
 const PopularItems = () => {
@@ -20,12 +19,8 @@ const PopularItems = () => {
   // Filter the products array to include only the top 5 items
   const topProductIds = topItems.map(item => item.id);
   const newtopProductIds = topProductIds.map(str => parseInt(str, 10));
-  console.log(newtopProductIds);
   const filteredData = data.filter(obj => newtopProductIds.includes(obj.id));
-  console.log("f"+filteredData);
 
-
-  const { filter } = useContext(DataContext)
   return (
     <>
       <h3 className="text-blk heading text-center ">Popular Products</h3>

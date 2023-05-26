@@ -14,8 +14,6 @@ export function DataProvider({children}) {
     const [data, setData] = useState([])
     const [users, setUsers] = useState([])
     const [filter, setFilter] = useState([])
-    const userIdToProducts = {}
-    const productIdToUser = {}
 
 
 
@@ -79,7 +77,7 @@ useEffect(() => {
 
 
     return (<DataContext.Provider value=
-    {{data, setData,users, setUsers,ratings, setRatings,loading,filter,currentAge, setCurrentAge,currentImage, setCurrentImage, setFilter, userIdToProducts, productIdToUser, currentName,setCurrentName}}>
+    {{data, setData,users, setUsers,ratings, setRatings,loading,filter,currentAge, setCurrentAge,currentImage, setCurrentImage, setFilter, currentName,setCurrentName}}>
         {children}
         </DataContext.Provider>);
 }

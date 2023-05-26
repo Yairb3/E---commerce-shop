@@ -1,11 +1,10 @@
 import React, { useState, useContext  } from 'react';
 import { NavLink } from "react-router-dom";
 import DataContext from "./usedb";
-import { update_ratings , update_score} from "../databaseAPI";
+import { update_score} from "../databaseAPI";
 
 const Items = () => {
   
-  const {ratings, setRatings} = useContext(DataContext);
   const [tempratings, setTempRatings] = useState({});
   // ratings is looks like: {id1: SumScoreOfItem],id2: [SumScoreOfItem]...}
   const handleRatingChange = (productId, rating) => {
@@ -16,7 +15,6 @@ const Items = () => {
         (prevRatings[productId] ? prevRatings[productId][1] : 0) + rating
       ]
     }));
-    console.log('sss', tempratings[productId]);
     update_score(productId,rating);
     //update_ratings(ratings); // pass the updated ratings instead of prevRatings
   };

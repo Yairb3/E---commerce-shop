@@ -16,8 +16,13 @@ function Signup ({ onSignup }) {
     const { users, setUsers } = useContext(DataContext);
 
     function handleImageChange(event) {
-        if (event.target.files && event.target.files[0]) {
-          setImage(URL.createObjectURL(event.target.files[0]));
+        const image = event.target.files[0];
+        if (image) {
+          const reader = new FileReader();
+          reader.readAsDataURL(image);
+          reader.addEventListener('load', () => {
+            setImage(reader.result);
+          })
         }
       }
 

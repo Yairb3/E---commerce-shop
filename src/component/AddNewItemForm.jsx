@@ -9,7 +9,6 @@ const AddNewItemForm = () => {
     DataContext
   );
 
-  const [email, setEmail] = useState("");
   const [title, setTitle] = useState("");
   const [image, setImage] = useState(null);
   const [description, setDescription] = useState("");
@@ -28,12 +27,11 @@ const AddNewItemForm = () => {
       reader.addEventListener('load', () => {
         setImage(reader.result);
       })
-
     }
   }
 
   const validateFields = () => {
-    const isValid = email && description && price && image;
+    const isValid = description && price && image;
     if (!isValid) {
       alert("Please fill in all fields before uploading.");
     }
@@ -48,8 +46,9 @@ const AddNewItemForm = () => {
   const handleUploadClick = () => {
     if (validateFields()) {
       const id = getNewId()
+      const currentUser = JSON.parse(window.localStorage.getItem('CURRENT_USER'))
       const newItem = {
-        email,
+        email: currentUser.email,
         image,
         title,
         description,
@@ -77,18 +76,6 @@ const AddNewItemForm = () => {
   <div className="form-popup" id="myForm"  >
     <form className="form-container" style={{ width: "100%" }}>
       <h1>Add New Item</h1>
-      <label htmlFor="email">
-        <b>Email: </b>
-      </label>
-      <input
-        type="text"
-        placeholder="Enter Email"
-        name="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-      />
-
       <label htmlFor="title">
         <b>Title: </b>
       </label>
