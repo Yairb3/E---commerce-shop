@@ -208,9 +208,16 @@ def update_score():
     with open('src/backend/ratings.json', 'r') as f:
         temp_ratings = json.load(f)
     if str(productid) in temp_ratings:
-        temp_ratings[str(productid)] += rating
+         cnt =  temp_ratings[str(productid)][1]
+         avarage = temp_ratings[str(productid)][0]
+         avarage = (avarage*cnt + rating)/(cnt+1)
+         cnt+=1
+         temp_ratings[str(productid)][1] = cnt
+         temp_ratings[str(productid)][0] = avarage 
+         print(cnt)
+
     else:
-        temp_ratings[str(productid)] = rating
+        temp_ratings[str(productid)] = [rating,1]
     with open('src/backend/ratings.json', 'w') as f:
         json.dump(temp_ratings, f, indent=4)
     return 'OK'

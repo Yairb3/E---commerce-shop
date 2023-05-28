@@ -13,6 +13,7 @@ function Signup ({ onSignup }) {
     const [age, setAge] = useState("");
     const [image, setImage] = useState(null);
     const [errors, setErrors] = useState({});
+    const [phone, setPhone] = useState(""); // New phone state
     const { users, setUsers } = useContext(DataContext);
 
     function handleImageChange(event) {
@@ -44,6 +45,7 @@ function Signup ({ onSignup }) {
                 email: email,
                 password: password,
                 age: age,
+                phone: phone,
                 image: image
             };
             if (Array.isArray(users)){
@@ -52,6 +54,7 @@ function Signup ({ onSignup }) {
                 setEmail("");
                 setName("");
                 setPassword("");
+                setPhone("");
                 history.push("/login");
             }
     }
@@ -82,6 +85,18 @@ function Signup ({ onSignup }) {
                         {errors.password && <span className="text-danger"> {errors.password}</span>}
                     </div>
                     <div className="mb-3">
+                        <label htmlFor="phone"><strong>Phone Number</strong></label>
+                        <input
+                            type="tel"
+                            placeholder="Enter Phone Number"
+                            name="phone"
+                            value={phone}
+                            onChange={(event) => setPhone(event.target.value)}
+                            className="form-control rounded-0"
+                        />
+                        {errors.phone && <span className="text-danger"> {errors.phone}</span>}
+                        </div>
+                    <div className="mb-3">
                         <label htmlFor="age"><strong>Age</strong></label>
                         <input type="number" placeholder="Enter Age" name="age" value={age} onChange={(event) => setAge(event.target.value)} className="form-control rounded-0" />
                         {errors.age && <span className="text-danger"> {errors.age}</span>}
@@ -109,4 +124,4 @@ function Signup ({ onSignup }) {
     )
 }
 
-export default Signup;
+export default Signup;
