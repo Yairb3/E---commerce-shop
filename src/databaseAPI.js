@@ -108,7 +108,7 @@ export const update_ratings = async (ratings) => {
     else{
     console.log('Problem at update rating');
     }
-  });
+  })
 }
 
 export const update_score = async (productid, rating) => {
@@ -124,6 +124,22 @@ export const update_score = async (productid, rating) => {
     }
     else{
     console.log('Problem at update rating');
+    }
+  });
+}
+
+export const add_new_log = async (eventName, productId) => {
+  await fetch('http://localhost:5000/logs', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({eventName, productId}),
+}).then(response => {
+    if (response.ok) {
+      console.log('User added successfully');
+    } else {
+      console.error('User not added');
     }
   });
 }

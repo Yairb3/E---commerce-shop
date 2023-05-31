@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { addCart, delCart } from '../redux/action';
 import { FaWhatsapp } from 'react-icons/fa';
+import { add_new_log } from '../databaseAPI';
 
 
 const Cart = () => {
@@ -14,6 +15,7 @@ const Cart = () => {
   };
 
   const handleDel = (item) => {
+    add_new_log("removeFromCart", item.id)
     dispatch(delCart(item));
   };
 
@@ -31,6 +33,7 @@ const Cart = () => {
 
   const cartItems = (product) => {
     const openWhatsApp = () => {
+        add_new_log("purchase", product.id)
         const phoneNumber = '+972525688627'; 
         const message = `Hi, I'm interested in " ${product.title}" you posted in Nice2Have! Can you give me more details please?`; // Customize the initial message if needed
         const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(

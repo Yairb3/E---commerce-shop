@@ -8,7 +8,7 @@ import ProfileCard from './ProfileCard';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import DataContext from "./usedb";
-import { get_user_by_mail } from '../databaseAPI';
+import { add_new_log, get_user_by_mail } from '../databaseAPI';
 import { FaWhatsapp } from 'react-icons/fa';
 
 
@@ -78,6 +78,7 @@ const Product = () => {
     const success = () => toast.success("Item was added to cart!");
     const dispatch = useDispatch();
     const addProduct = (product) => {
+        add_new_log("cart", product.id)
         success();
         dispatch(addCart(product));
     }
@@ -119,6 +120,7 @@ const Product = () => {
     }
     const ShowProduct = () => {
         const initiateWhatsAppConversation = () => {
+            add_new_log("purchase", product.id)
             const phoneNumber = '+972525688627'; 
             const message = `Hi, I'm interested in " ${product.title}" you posted in Nice2Have! Can you give me more details please?`; // Customize the initial message if needed
             const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
