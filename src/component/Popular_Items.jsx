@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import DataContext from './usedb';
 import { NavLink } from "react-router-dom";
+import { add_new_log } from "../databaseAPI";
 
 const PopularItems = () => {
   const { ratings, data } = useContext(DataContext);
@@ -41,6 +42,7 @@ const PopularItems = () => {
                 <NavLink
                   to={`/products/${product.id}`}
                   className="btn btn-outline-dark"
+                  onClick={() => add_new_log("view", product.id)}
                 >
                   Buy Now
                 </NavLink>

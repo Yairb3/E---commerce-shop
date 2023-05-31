@@ -130,6 +130,18 @@ def add_new_user(user):
     with open('src/backend/users.json', 'w') as f:
         json.dump(users, f, indent=4)
 
+def add_new_log(new_log):
+    # load the current items from the file
+    with open('src/backend/logs.json', 'r') as f:
+        logs = json.load(f)
+    # add the new item to the list
+    logs.append(new_log)
+
+    # write the updated items to the file
+    with open('src/backend/logs.json', 'w') as f:
+        json.dump(logs, f, indent=4)
+
+
 # endpoint to handle GET and POST requests for the item list
 @app.route('/item', methods=['GET', 'POST'])
 def handle_items():
@@ -220,6 +232,14 @@ def update_score():
         temp_ratings[str(productid)] = [rating,1]
     with open('src/backend/ratings.json', 'w') as f:
         json.dump(temp_ratings, f, indent=4)
+    return 'OK'
+
+
+# Endpoint to handle POST requests for new logs
+@app.route('/logs', methods=['POST'])
+def add_log_by_event():
+    log = request.json
+    add_new_log(log)
     return 'OK'
 
 

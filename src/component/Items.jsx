@@ -1,7 +1,7 @@
 import React, { useState, useContext  } from 'react';
 import { NavLink } from "react-router-dom";
 import DataContext from "./usedb";
-import { update_score} from "../databaseAPI";
+import { add_new_log, update_score} from "../databaseAPI";
 
 const Items = () => {
   
@@ -18,7 +18,6 @@ const Items = () => {
     update_score(productId,rating);
     //update_ratings(ratings); // pass the updated ratings instead of prevRatings
   };
-
 
   const { filter } = useContext(DataContext)
   return (
@@ -46,7 +45,7 @@ const Items = () => {
                     ))}
                   </span>
                 </div>
-                <NavLink to={`/products/${product.id}`} className="btn btn-outline-dark">
+                <NavLink to={`/products/${product.id}`} className="btn btn-outline-dark" onClick={() => add_new_log("view", product.id)}>
                   Buy Now
                 </NavLink>
               </div>
