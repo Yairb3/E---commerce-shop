@@ -3,15 +3,11 @@ from json import JSONEncoder
 from json.decoder import JSONDecodeError
 
 
-
-
-
 def convertJsonToMatrix():
     file_logs = r"C:\TAU\Computer Science\third year\Ecommerce\E---commerce-shop\src\backend\logs.json"
     with open(file_logs) as json_file :
         data = json.load(json_file)
     return data
-
         
 class Histograms:
     def __init__(self) -> None:
@@ -66,8 +62,6 @@ class Histograms:
         if len(infimumtop5) > 1:
             productNode.top5[infimumtop5[0]] =infimumtop5[1]
        
-
-
     def updateHistogarm(self):
         for eventName in [ "view","cart","purchase","removeFromCart"]:
             score = self.weightedEvents(eventName)
@@ -78,7 +72,6 @@ class Histograms:
                         if relatedProduct != product:
                             currProductHistogram.add(relatedProduct,score)
 
-  
     def weightedEvents(self,eventName):
         match eventName:
             case  "view":
@@ -92,10 +85,8 @@ class Histograms:
             case _:
                 return 0
     
-
 class session:
     session = 5
-
     def __init__(self) -> None:
             self.logs = []
             self.logId = 0
@@ -138,8 +129,6 @@ class ProductHistogram:
             self.lowestTopScore = lowestTopScore
             self.histogram = histogram
         
-
-    
     def add(self, relatedprodactId, score):
         relatedprodactId = str(relatedprodactId)
         if relatedprodactId in self.histogram:
@@ -160,13 +149,10 @@ class ProductHistogram:
                 self.lowestTopScore = (relatedprodactId,score)
             self.top5[relatedprodactId] = score
         
-   
+
 class ProductHistogramDict:
     def __init__(self) -> None:
-            # if productsDict == None:
            self.productsDict = dict()
-            # self.productsDict = productsDict
-
     
     def setProductsDict(self,productsDict):
         self.productsDict = productsDict
@@ -180,8 +166,7 @@ class ProductHistogramDict:
         if str(productId) not in self.productsDict:
             self.productsDict[productId] = ProductHistogram(productId=productId)
         return self.productsDict[productId]
-    
-    
+        
 def insert_item(item):
     # write the updated items to the file
     with open(r'src\backend\products.json', 'w',encoding='utf-8') as f:
@@ -190,7 +175,6 @@ def insert_item(item):
 
 def getProductsDB():
     with open('src/backend/products.json', 'r') as f:
-        # data = f.read()
         try:
             data_dict = json.load(f)
             productDB = {key: ProductHistogram(**value) for key, value in data_dict.items()}
@@ -206,7 +190,6 @@ if __name__ == '__main__':
     session1 = session()
     for log in logs:
         session1.add(Log(log['eventName'],log['productId'], log['sessionId'], log['logID']))
-    
     prodactDB = getProductsDB()
     histograms = Histograms()
     if prodactDB != None:
