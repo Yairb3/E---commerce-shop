@@ -19,6 +19,15 @@ export const delete_item_by_id = async (id) => {
       });
 }
 
+export const updateReco = async () => {
+  await fetch('http://localhost:5000//logs')
+      .then(response => response.json())
+      .then(data => {
+        console.log(data.message);  
+      });
+}
+
+
 export const add_item = async (item) => {
     await fetch('http://localhost:5000/item', {
         method: 'POST',
