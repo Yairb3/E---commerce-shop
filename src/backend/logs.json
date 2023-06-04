@@ -74,5 +74,33 @@
     {
         "eventName": "view",
         "productId": 16
+    },
+    {
+        "eventName": "view",
+        "productId": 4
+    },
+    {
+        "eventName": "view",
+        "productId": 4
+    },
+    {
+        "eventName": "view",
+        "productId": 4
+    },
+    {
+        "eventName": "view",
+        "productId": 4
+    },
+    {
+        "eventName": "view",
+        "productId": 4
+    },
+    {
+        "eventName": "view",
+        "productId": 4
+    },
+    {
+        "eventName": "view",
+        "productId": 8
     }
 ]
