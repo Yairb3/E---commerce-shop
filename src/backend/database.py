@@ -167,12 +167,6 @@ def getTopfive(productId):
             print("Error occurred in getTopFive")
         
 
-        except json.JSONDecodeError:
-            logs = []
-            logs.append(new_log) 
-    # write the updated logs to the file
-    with open('src/backend/logs.json', 'w') as f:
-        json.dump(logs, f, indent=4)
 
 
 
