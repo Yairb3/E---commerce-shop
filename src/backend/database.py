@@ -158,17 +158,18 @@ def getTopfive(productId):
     with open('src/backend/products.json', 'r') as f:
         try:
             products = json.load(f)
-            productsTop5 = products[productId]['top5']
+            productsTop5 = products[str(productId)]['top5']
             top5 = []
-            for prodId in productsTop5:
-                top5.append(get_item_by_id(prodId))
+            for prodId in productsTop5.keys():
+                top5.append(get_item_by_id(int(prodId)))
             return top5
         except:
             print("Error occurred in getTopFive")
         
 
 
-
+##############################################################################################################
+# endpoints
 
 
 # endpoint to handle GET and POST requests for the item list
@@ -282,12 +283,11 @@ def updateReco():
 
 # endpoint to handle GET requests for recommended items by ID
 @app.route('/products/<int:product_id>', methods=['GET'])
-def get_recommended_item(product_id):
+def get_recommended_items(product_id):
     items = getTopfive(product_id)
-    if items:
-        return jsonify(items)
-    else:
-        return 'Recommended items not found'
+    print(items)
+    return jsonify(items)
+    
     
 
 if __name__ == '__main__':
