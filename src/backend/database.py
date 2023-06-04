@@ -158,8 +158,12 @@ def getTopfive(productId):
     with open('src/backend/products.json', 'r') as f:
         try:
             products = json.load(f)
+            # print(products)
             productsTop5 = products[str(productId)]['top5']
             top5 = []
+            # print(productsTop5)
+            if productsTop5 == None:
+                return []
             for prodId in productsTop5.keys():
                 top5.append(get_item_by_id(int(prodId)))
             return top5

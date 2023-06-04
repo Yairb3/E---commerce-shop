@@ -102,6 +102,13 @@ function get_Jaccard_similarity(productId1,productId2, idToProduct){
   return jaccard_value/5;
 }; 
 
+function getRecommendedItems(items) {
+    if (items == null) {
+        return [];
+    }
+    return items;
+
+}
 const Product = () => {
     const { id } = useParams();
     const { data } = useContext(DataContext);
@@ -124,7 +131,7 @@ const Product = () => {
             setLoading(true);
             const idToProduct = JSON.parse(window.localStorage.getItem('ID_TO_PRODUCT'))
             const product = await get_item_by_id(id);
-            setTopFiveProducts(await get_recommended_items(product.id));
+            setTopFiveProducts(getRecommendedItems(await get_recommended_items(product.id)));
             const similarProductIds = getSimilarProducts(data, product.id);
             setSimilarProduct1(idToProduct[similarProductIds[0]]);
             setSimilarProduct2(idToProduct[similarProductIds[1]]);
@@ -137,7 +144,7 @@ const Product = () => {
         getProduct();
     }, [id, data]);
 
-    
+
 
     const Loading = () => {
         return (
@@ -205,49 +212,48 @@ const Product = () => {
                         </NavLink>
                     </div>
                     <br />
-                        <h4 className="recommended-products-title" style={{
+
+                    {topFiveProducts && topFiveProducts.length > 0 &&(
+                        <><h4 className="recommended-products-title" style={{
                             paddingTop: "100px",
                         }}>
                             {" "}
                             You may be interested in:
-                        </h4>
-                        <div
+                        </h4><div
                             style={{
                                 display: "flex",
                                 flexDirection: "row",
                                 justifyContent: "space-between",
-                                paddingBottom : "100px"
+                                paddingBottom: "100px"
                             }}
                         >
-                            {topFiveProducts.map((subProduct, index) => (
-                                <div key={index} >
-                                    <div className="recommendedProductImage" >
-                                        <a
-                                            href={`http://localhost:3000/products/${subProduct?.id}`}
-                                        >
-                                            <img
-                                                src={subProduct?.image}
-                                                alt={subProduct?.title}
-                                                height="80px"
-                                                width="80px"
-                                               
-                                               
-                                                
-                                            />
-                                        </a>
+                                {topFiveProducts.map((subProduct, index) => (
+                                    <div key={index}>
+                                        <div className="recommendedProductImage">
+                                            <a
+                                                href={`http://localhost:3000/products/${subProduct?.id}`}
+                                            >
+                                                <img
+                                                    src={subProduct?.image}
+                                                    alt={subProduct?.title}
+                                                    height="80px"
+                                                    width="80px" />
+                                            </a>
+                                        </div>
+                                        <div className="recommendedProductDetails">
+                                            {/* <p>
+                <h6>{subProduct?.title}</h6>
+            </p> */}
+                                            {/* <p>{subProduct?.price}</p> */}
+                                        </div>
                                     </div>
-                                    <div className="recommendedProductDetails">
-                                        {/* <p>
-                                            <h6>{subProduct?.title}</h6>
-                                        </p> */}
-                                        {/* <p>{subProduct?.price}</p> */}
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
+                                ))}
+                            </div></>
+                    )}
+
                     <br />
-                    <h4 className="similar-products-title" 
-                        >Similar Products:</h4>
+                    <h4 className="similar-products-title"
+                    >Similar Products:</h4>
                     <div
                         className="similarProductsDiv"
                         style={{
