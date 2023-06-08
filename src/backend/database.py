@@ -1,3 +1,4 @@
+import copy
 import json
 from flask import Flask, jsonify, request
 from flask_cors import CORS
@@ -217,6 +218,8 @@ def get_ratings():
 def update_score():
     productid = request.json['productid']
     rating = request.json['rating']
+    prod = get_item_by_id(productid)
+    new_prod = copy.copy(prod)
     with open('src/backend/ratings.json', 'r') as f:
         temp_ratings = json.load(f)
     if str(productid) in temp_ratings:
@@ -225,15 +228,19 @@ def update_score():
          avarage = (avarage*cnt + rating)/(cnt+1)
          cnt+=1
          temp_ratings[str(productid)][1] = cnt
-         temp_ratings[str(productid)][0] = avarage 
-         print(cnt)
-
+         temp_ratings[str(productid)][0] = avarage
+         new_prod['rating'] = {'count': cnt, 'rate': round(avarage, 2)}
     else:
         temp_ratings[str(productid)] = [rating,1]
+        new_prod['rating'] = {'count': 1, 'rate': round(rating, 2)}
+    modify_item(productid, new_prod)
     with open('src/backend/ratings.json', 'w') as f:
         json.dump(temp_ratings, f, indent=4)
     return 'OK'
-
+    #    "rating": {
+    #         "count": 0,
+    #         "rate": 0
+    #     },
 
 # Endpoint to handle POST requests for new logs
 @app.route('/logs', methods=['POST'])

@@ -8,7 +8,7 @@ import ProfileCard from './ProfileCard';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import DataContext from "./usedb";
-import { add_new_log, get_user_by_mail } from '../databaseAPI';
+import { add_new_log, get_user_by_mail, get_item_by_id } from '../databaseAPI';
 import { FaWhatsapp } from 'react-icons/fa';
 
 
@@ -86,8 +86,7 @@ const Product = () => {
         const getProduct = async () => {
             setLoading(true);
             const idToProduct = JSON.parse(window.localStorage.getItem('ID_TO_PRODUCT'))
-            const product = idToProduct[id];
-            console.log(product);
+            const product = await get_item_by_id(id);
             const similarProductIds = getSimilarProducts(data, product.id);
             setSimilarProduct1(idToProduct[similarProductIds[0]]);
             setSimilarProduct2(idToProduct[similarProductIds[1]]);

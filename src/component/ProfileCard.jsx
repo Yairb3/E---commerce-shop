@@ -3,7 +3,6 @@ import "../App.css";
 import avatar from "../images/roee-n-avatar.png";
 
 function ProfileCard(user) {
-	console.log("user", user.user.image);
 	return (
 		<div className="card-container">
 			<header>

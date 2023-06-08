@@ -7,8 +7,8 @@
         "category": "men's clothing",
         "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
         "rating": {
-            "rate": 28.9,
-            "count": 125
+            "count": 50,
+            "rate": 1.9
         },
         "email": "roeenegri77@gmail.com",
         "color": "blue",
@@ -23,8 +23,8 @@
         "category": "men's clothing",
         "image": "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg",
         "rating": {
-            "rate": 9.1,
-            "count": 260
+            "count": 6,
+            "rate": 4.17
         },
         "email": "roeenegri77@gmail.com",
         "color": "grey",
@@ -39,8 +39,8 @@
         "category": "men's clothing",
         "image": "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg",
         "rating": {
-            "rate": 14.7,
-            "count": 502
+            "count": 5,
+            "rate": 4.8
         },
         "email": "roeenegri77@gmail.com",
         "color": "yellow",
@@ -55,8 +55,8 @@
         "category": "men's clothing",
         "image": "https://fakestoreapi.com/img/71YXzeOuslL._AC_UY879_.jpg",
         "rating": {
-            "rate": 7.1,
-            "count": 431
+            "count": 6,
+            "rate": 3.83
         },
         "email": "roeenegri77@gmail.com",
         "color": "navy blue",
@@ -71,8 +71,8 @@
         "category": "jewelery",
         "image": "https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg",
         "rating": {
-            "rate": 4.6,
-            "count": 400
+            "count": 10,
+            "rate": 3.1
         },
         "email": "roeenegri77@gmail.com",
         "color": "silver",
@@ -87,8 +87,8 @@
         "category": "jewelery",
         "image": "https://fakestoreapi.com/img/61sbMiUnoGL._AC_UL640_QL65_ML3_.jpg",
         "rating": {
-            "rate": 3.9,
-            "count": 70
+            "count": 8,
+            "rate": 4.88
         },
         "email": "roeenegri77@gmail.com",
         "color": "silver",
@@ -103,8 +103,8 @@
         "category": "jewelery",
         "image": "https://fakestoreapi.com/img/71YAIFU48IL._AC_UL640_QL65_ML3_.jpg",
         "rating": {
-            "rate": 3,
-            "count": 400
+            "count": 1,
+            "rate": 5
         },
         "email": "roeenegri77@gmail.com",
         "color": "silver",
@@ -119,8 +119,8 @@
         "category": "jewelery",
         "image": "https://fakestoreapi.com/img/51UDEzMJVpL._AC_UL640_QL65_ML3_.jpg",
         "rating": {
-            "rate": 1.9,
-            "count": 100
+            "count": 1,
+            "rate": 3
         },
         "email": "roeenegri77@gmail.com",
         "color": "rose gold",
@@ -135,8 +135,8 @@
         "category": "electronics",
         "image": "https://fakestoreapi.com/img/61IBBVJvSDL._AC_SY879_.jpg",
         "rating": {
-            "rate": 3.3,
-            "count": 203
+            "count": 1,
+            "rate": 1
         },
         "email": "roeenegri77@gmail.com"
     },
@@ -148,8 +148,8 @@
         "category": "electronics",
         "image": "https://fakestoreapi.com/img/61U7T1koQqL._AC_SX679_.jpg",
         "rating": {
-            "rate": 2.9,
-            "count": 470
+            "count": 1,
+            "rate": 1
         },
         "email": "roeenegri77@gmail.com"
     },
@@ -161,8 +161,8 @@
         "category": "electronics",
         "image": "https://fakestoreapi.com/img/71kWymZ+c+L._AC_SX679_.jpg",
         "rating": {
-            "rate": 4.8,
-            "count": 319
+            "count": 1,
+            "rate": 1
         },
         "email": "roeenegri77@gmail.com"
     },
@@ -174,8 +174,8 @@
         "category": "electronics",
         "image": "https://fakestoreapi.com/img/61mtL65D4cL._AC_SX679_.jpg",
         "rating": {
-            "rate": 4.8,
-            "count": 400
+            "count": 1,
+            "rate": 1
         },
         "email": "roeenegri77@gmail.com"
     },
@@ -187,8 +187,8 @@
         "category": "electronics",
         "image": "https://fakestoreapi.com/img/81QpkIctqPL._AC_SX679_.jpg",
         "rating": {
-            "rate": 2.9,
-            "count": 250
+            "count": 1,
+            "rate": 2
         },
         "email": "roeenegri77@gmail.com"
     },
@@ -200,8 +200,8 @@
         "category": "electronics",
         "image": "https://fakestoreapi.com/img/81Zt42ioCgL._AC_SX679_.jpg",
         "rating": {
-            "rate": 2.2,
-            "count": 140
+            "count": 1,
+            "rate": 5
         },
         "email": "roeenegri77@gmail.com"
     },
@@ -213,8 +213,8 @@
         "category": "women's clothing",
         "image": "https://fakestoreapi.com/img/51Y5NI-I5jL._AC_UX679_.jpg",
         "rating": {
-            "rate": 2.6,
-            "count": 235
+            "count": 2,
+            "rate": 4.0
         },
         "email": "roeenegri77@gmail.com",
         "color": "purple",
@@ -229,8 +229,8 @@
         "category": "women's clothing",
         "image": "https://fakestoreapi.com/img/81XH0e8fefL._AC_UY879_.jpg",
         "rating": {
-            "rate": 2.9,
-            "count": 340
+            "count": 1,
+            "rate": 3
         },
         "email": "roeenegri77@gmail.com",
         "color": "black",
@@ -245,8 +245,8 @@
         "category": "women's clothing",
         "image": "https://fakestoreapi.com/img/71HblAHs5xL._AC_UY879_-2.jpg",
         "rating": {
-            "rate": 3.8,
-            "count": 679
+            "count": 1,
+            "rate": 4
         },
         "email": "roeenegri77@gmail.com",
         "color": "blue",
@@ -261,8 +261,8 @@
         "category": "women's clothing",
         "image": "https://fakestoreapi.com/img/71z3kpMAYsL._AC_UY879_.jpg",
         "rating": {
-            "rate": 4.7,
-            "count": 130
+            "count": 2,
+            "rate": 4.0
         },
         "email": "roeenegri77@gmail.com",
         "color": "white",
@@ -277,8 +277,8 @@
         "category": "women's clothing",
         "image": "https://fakestoreapi.com/img/51eg55uWmdL._AC_UX679_.jpg",
         "rating": {
-            "rate": 4.5,
-            "count": 146
+            "count": 2,
+            "rate": 4.0
         },
         "email": "roeenegri77@gmail.com",
         "color": "red",
@@ -293,8 +293,8 @@
         "category": "women's clothing",
         "image": "https://fakestoreapi.com/img/61pHAEJ4NML._AC_UX679_.jpg",
         "rating": {
-            "rate": 3.6,
-            "count": 145
+            "count": 2,
+            "rate": 4.0
         },
         "email": "roeenegri77@gmail.com",
         "color": "purple",
@@ -322,8 +322,8 @@
         "email": "yuvalr1997@gmail.com",
         "category": "women's clothing",
         "rating": {
-            "count": 0,
-            "rate": 0
+            "count": 2,
+            "rate": 3.5
         },
         "id": 22
     },
@@ -335,8 +335,8 @@
         "price": "11",
         "category": "men's clothing",
         "rating": {
-            "count": 0,
-            "rate": 0
+            "count": 1,
+            "rate": 5
         },
         "id": 23,
         "color": "black",

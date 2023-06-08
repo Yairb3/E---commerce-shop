@@ -72,8 +72,6 @@ export const get_user_by_mail = async (mail) => {
 export const get_ratings = async () => {
   const response = await fetch('http://localhost:5000/ratings')
   const data = await response.json();
-  console.log(data);
-
   return data;
 }
 
@@ -94,7 +92,6 @@ export const add_user = async (user) => {
       });
 }
 export const update_ratings = async (ratings) => {
-  console.log(ratings);
   await fetch('http://localhost:5000/ratings', {
     method: 'POST',
     headers:{
