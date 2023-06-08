@@ -237,10 +237,6 @@ def update_score():
     with open('src/backend/ratings.json', 'w') as f:
         json.dump(temp_ratings, f, indent=4)
     return 'OK'
-    #    "rating": {
-    #         "count": 0,
-    #         "rate": 0
-    #     },
 
 # Endpoint to handle POST requests for new logs
 @app.route('/logs', methods=['POST'])

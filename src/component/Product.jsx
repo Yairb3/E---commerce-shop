@@ -151,7 +151,7 @@ const Product = () => {
                             Add to Cart
                         <ToastContainer />
                         </button>
-                        <button className="btn btn-outline-dark px-4 py-2 ms-2" onClick={initiateWhatsAppConversation}>
+                        <button className="btn btn-outline-success px-4 py-2 ms-2" onClick={initiateWhatsAppConversation}>
                             <FaWhatsapp className="me-2" />
                             WhatsApp
                         </button>

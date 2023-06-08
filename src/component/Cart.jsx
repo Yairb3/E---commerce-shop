@@ -62,7 +62,7 @@ const Cart = () => {
                 <button className="btn btn-outline-dark" onClick={() => handleAdd(product)}>
                   <i className="fa fa-plus"></i>
                 </button>
-                <button className="btn btn-outline-dark" onClick={openWhatsApp}>
+                <button className="btn btn-outline-success" onClick={openWhatsApp}>
                 <FaWhatsapp className="me-2" />
                     WhatsApp
                 </button>
