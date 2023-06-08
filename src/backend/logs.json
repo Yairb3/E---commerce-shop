@@ -130,5 +130,9 @@
     {
         "eventName": "view",
         "productId": 2
+    },
+    {
+        "eventName": "view",
+        "productId": 1
     }
 ]
