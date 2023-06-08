@@ -110,5 +110,25 @@
     {
         "eventName": "view",
         "productId": 1
+    },
+    {
+        "eventName": "view",
+        "productId": 1
+    },
+    {
+        "eventName": "view",
+        "productId": 1
+    },
+    {
+        "eventName": "view",
+        "productId": 3
+    },
+    {
+        "eventName": "view",
+        "productId": 1
+    },
+    {
+        "eventName": "view",
+        "productId": 2
     }
 ]

@@ -47,23 +47,39 @@ const getSimilarProducts = (data, productId) => {
   };
 
 function get_Jaccard_similarity(productId1,productId2, idToProduct){
+  // Check were not checking similarity with ourselfs.
   if (productId1 === productId2) {
     return -1;
   }
   const product1 = idToProduct[productId1];
   const product2 = idToProduct[productId2];
 
-  let numerator = 0;
-  let denominator = 0;
-  for (let key in product1) {
-    if (product1.hasOwnProperty(key) && product2.hasOwnProperty(key)) {
-      if (product1[key] === product2[key]) {
-        numerator++;
-      }
-      denominator++;
-    }
-  }
-  return numerator/denominator;
+  //comparison begins, we try to normalize each value of similarity to make sure each catgeroy of comparison gets the weight we want.
+  //most important is category followed by price and lastly similarity between titles.
+  let jaccard_value = 0;
+  
+  // category comparison
+  if (product1["category"] === product2["category"]) {
+    jaccard_value = jaccard_value + 1;
+  }; 
+
+  // price comparison
+  let diff_price = Math.abs(product1["price"] - product2["price"]);
+  // we convert it to a fraction because otherwise it will influence on the result much more than the category.
+  let diff_price_fraction = 1 / diff_price;
+  
+  // titles comparison end result is num of shared words divided by num of all total unique words in our product.
+  let title1 = product1["title"];
+  let title2 = product2["title"];
+  let words1 = title1.split(' ');
+  let words2 = title2.split(' ');
+  let sharedWords = words1.filter(word => words2.includes(word));
+  let totalSharedWords = sharedWords.length;
+  let allWords = [...words1];
+  let uniqueWords = [...new Set(allWords)];
+  let totalUniqueWords = uniqueWords.length;
+  jaccard_value = jaccard_value + (totalSharedWords/totalUniqueWords) + diff_price_fraction;
+  return jaccard_value;
 }; 
 
 const Product = () => {
