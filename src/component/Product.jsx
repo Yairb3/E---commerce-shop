@@ -120,7 +120,7 @@ const Product = () => {
     const ShowProduct = () => {
         const initiateWhatsAppConversation = () => {
             add_new_log("purchase", product.id)
-            const phoneNumber = '+972525688627'; 
+            const phoneNumber = user.phone; 
             const message = `Hi, I'm interested in " ${product.title}" you posted in Nice2Have! Can you give me more details please?`; // Customize the initial message if needed
             const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
               message
