@@ -74,7 +74,7 @@ function get_Jaccard_similarity(productId1,productId2, idToProduct){
   // titles comparison end result is num of shared words divided by num of all total unique words in our product.
   if (product1.hasOwnProperty("title") && product2.hasOwnProperty("title")) {
     const title1 = product1["title"];
-    letעןא  title2 = product2["title"];
+    let title2 = product2["title"];
     let words1 = title1.split(' ');
     let words2 = title2.split(' ');
     let sharedWords = words1.filter(word => words2.includes(word));
@@ -93,7 +93,7 @@ function get_Jaccard_similarity(productId1,productId2, idToProduct){
   // color comparison - if you belong to the same group color ({black,white,silver} or other)
   if (product1.hasOwnProperty("color") && product2.hasOwnProperty("color")) {
     const baseColors = ["black", "white","silver"];
-    if (baseColors.includes(product1["color"]) && baseColors.includes(product2["color"])) {
+    if (baseColors.includes(product1["color"]) === baseColors.includes(product2["color"])) {
         jaccard_value = jaccard_value + 1;
       }
   }
