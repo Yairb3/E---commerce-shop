@@ -47,23 +47,57 @@ const getSimilarProducts = (data, productId) => {
   };
 
 function get_Jaccard_similarity(productId1,productId2, idToProduct){
+  // Check were not checking similarity with ourselfs.
   if (productId1 === productId2) {
     return -1;
   }
   const product1 = idToProduct[productId1];
   const product2 = idToProduct[productId2];
 
-  let numerator = 0;
-  let denominator = 0;
-  for (let key in product1) {
-    if (product1.hasOwnProperty(key) && product2.hasOwnProperty(key)) {
-      if (product1[key] === product2[key]) {
-        numerator++;
-      }
-      denominator++;
+  //comparison begins, we try to normalize each value to be between 0 and 1, at the end we will divide the value by the number of comparisons so the end value will be between 0 and 1
+  //most important is category followed by price and lastly similarity between titles.
+  let jaccard_value = 0;
+  // category comparison
+  if (product1.hasOwnProperty("category") && product2.hasOwnProperty("category")) {
+    if (product1["category"] === product2["category"]) {
+        jaccard_value = jaccard_value + 1;
     }
   }
-  return numerator/denominator;
+
+  // price comparison
+  if (product1.hasOwnProperty("price") && product2.hasOwnProperty("price")) {
+    let diff_price = Math.abs(product1["price"] - product2["price"]);
+    // we convert it to a fraction because otherwise it will influence on the result much more than the category.
+    jaccard_value = jaccard_value + 1 / diff_price;
+  }
+
+  // titles comparison end result is num of shared words divided by num of all total unique words in our product.
+  if (product1.hasOwnProperty("title") && product2.hasOwnProperty("title")) {
+    const title1 = product1["title"];
+    let title2 = product2["title"];
+    let words1 = title1.split(' ');
+    let words2 = title2.split(' ');
+    let sharedWords = words1.filter(word => words2.includes(word));
+    let totalSharedWords = sharedWords.length;
+    let allWords = [...words1];
+    let uniqueWords = [...new Set(allWords)];
+    let totalUniqueWords = uniqueWords.length;
+    jaccard_value = jaccard_value + (totalSharedWords/totalUniqueWords);
+  }
+  //item type comparison
+  if (product1.hasOwnProperty("item") && product2.hasOwnProperty("item")) {
+    if (product1["item"] === product2["item"]) {
+        jaccard_value = jaccard_value + 1;
+    }
+  }
+  // color comparison - if you belong to the same group color ({black,white,silver} or other)
+  if (product1.hasOwnProperty("color") && product2.hasOwnProperty("color")) {
+    const baseColors = ["black", "white","silver"];
+    if (baseColors.includes(product1["color"]) === baseColors.includes(product2["color"])) {
+        jaccard_value = jaccard_value + 1;
+      }
+  }
+  return jaccard_value/5;
 }; 
 
 const Product = () => {
