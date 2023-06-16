@@ -4,7 +4,7 @@ from json.decoder import JSONDecodeError
 
 
 def convertJsonToMatrix():
-    file_logs = r"C:\TAU\Computer Science\third year\Ecommerce\E---commerce-shop\src\backend\logs.json"
+    file_logs = r"src/backend/logs.json"
     with open(file_logs) as json_file :
         data = json.load(json_file)
     return data
@@ -89,17 +89,14 @@ class session:
     session = 5
     def __init__(self) -> None:
             self.logs = []
-            self.logId = 0
            
     def __repr__(self) -> str:
         res = ""
         for log in self.logs:
-            res += f"{type(log).__name__}(eventName={log.eventName}, productId={log.productId}, sessionId={log.sessionId}, logID={log.logID})"    + '\n'
+            res += f"{type(log).__name__}(eventName={log.eventName}, productId={log.productId})"    + '\n'
         return res
 
     def add(self ,log):
-        log.logID = self.logId
-        self.logId +=1
         self.logs.append(log)
         
 
@@ -107,14 +104,12 @@ class Log:
     def __new__(cls, *args, **kwargs):
         return super().__new__(cls)
     
-    def __init__(self, eventName, productId, sessionId, logID) -> None:
+    def __init__(self, eventName, productId) -> None:
             self.eventName = eventName
             self.productId = productId
-            self.sessionId = sessionId
-            self.logID = logID
-
+     
     def __repr__(self) -> str:
-        return f"{type(self).__name__}(eventName={self.eventName}, productId={self.productId}, sessionId={self.sessionId}, logID={self.logID} )"   
+        return f"{type(self).__name__}(eventName={self.eventName}, productId={self.productId})"   
 
 class ProductHistogram:
 
@@ -183,13 +178,35 @@ def getProductsDB():
         # productDB = json.load(f)
         return productDB
 
+def deleteLogs():
+    with open('src/backend/logs.json', 'w') as f:
+    # Truncate the file content
+        f.truncate(0)
+
+
+def updateRecommendByLogs():
+    # productHistogramDict = ProductHistogramDict()
+    logs = convertJsonToMatrix()
+    session1 = session()
+    for log in logs:
+        session1.add(Log(log['eventName'],log['productId']))
+    prodactDB = getProductsDB()
+    histograms = Histograms()
+    if prodactDB != None:
+         histograms.allHistograms.setProductsDict(prodactDB)
+    histograms.classifyProducts(session1.logs)
+    histograms.updateHistogarm()
+    insert_item(histograms.allHistograms.productsDict)
+    deleteLogs()
+
+    
 
 if __name__ == '__main__':
     productHistogramDict = ProductHistogramDict()
     logs = convertJsonToMatrix()
     session1 = session()
     for log in logs:
-        session1.add(Log(log['eventName'],log['productId'], log['sessionId'], log['logID']))
+        session1.add(Log(log['eventName'],log['productId']))
     prodactDB = getProductsDB()
     histograms = Histograms()
     if prodactDB != None:

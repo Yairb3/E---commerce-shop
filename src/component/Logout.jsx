@@ -11,8 +11,9 @@ const Logout = () => {
     const handleLogout = (event) => {
       window.localStorage.setItem('IS_LOGGED_IN', false);
       window.localStorage.setItem('CURRENT_USER', null);
-    history.push("/");
-        }
+      history.push("/");
+      
+      }
   return (
     <button onClick={handleLogout} className="btn btn-primary">
     </button>

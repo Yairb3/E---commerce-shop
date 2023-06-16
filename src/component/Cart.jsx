@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { addCart, delCart } from '../redux/action';
@@ -11,8 +11,30 @@ const Cart = () => {
   const dispatch = useDispatch();
 
   const handleAdd = (item) => {
-    dispatch(addCart(item));
-  };
+          const logEntry = {
+              eventName: 'cart',
+              productId:item.id,
+          };
+          fetch('http://localhost:3000/logs', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(logEntry)
+          })
+          .then(response => {
+            if (response.ok) {
+              console.log(' log sent successfully');
+            } else {
+              console.error('Failed to send error log');
+            }
+          })
+          .catch(error => {
+            console.error('Error occurred while sending error log', error);
+          });
+        
+        dispatch(addCart(item));
+  }
 
   const handleDel = (item) => {
     add_new_log("removeFromCart", item.id)
