@@ -2,6 +2,7 @@ import copy
 import json
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+from recommend import updateRecommendByLogs
 
 app = Flask(__name__)
 CORS(app)
@@ -131,16 +132,50 @@ def add_new_user(user):
     with open('src/backend/users.json', 'w') as f:
         json.dump(users, f, indent=4)
 
+##############################################################################################################
+# functions for logs
+
+
 def add_new_log(new_log):
     # load the current items from the file
     with open('src/backend/logs.json', 'r') as f:
-        logs = json.load(f)
-    # add the new item to the list
-    logs.append(new_log)
-
-    # write the updated items to the file
+        try:
+            logs = json.load(f)
+            logs.append(new_log)   
+        except json.JSONDecodeError:
+            logs = []
+            logs.append(new_log) 
+    # write the updated logs to the file
     with open('src/backend/logs.json', 'w') as f:
         json.dump(logs, f, indent=4)
+
+
+##############################################################################################################
+# functions for recommended items
+
+def getTopfive(productId):
+    with open('src/backend/products.json', 'r') as f:
+        try:
+            products = json.load(f)
+            # print(products)
+            try:
+                productsTop5 = products[str(productId)]['top5']
+            except:
+                productsTop5 = None
+            top5 = []
+            print(productsTop5)
+            if productsTop5 == None:
+                return []
+            for prodId in productsTop5.keys():
+                top5.append(get_item_by_id(int(prodId)))
+            return top5
+        except:
+            print("Error occurred in getTopFive")
+        
+
+
+##############################################################################################################
+# endpoints
 
 
 # endpoint to handle GET and POST requests for the item list
@@ -245,7 +280,21 @@ def add_log_by_event():
     add_new_log(log)
     return 'OK'
 
+@app.route('/logs', methods=['GET'])
+#update products histograms according to logs 
+def updateReco():
+    updateRecommendByLogs()
+    message = "success"
+    return jsonify({'message': message})
 
+# endpoint to handle GET requests for recommended items by ID
+@app.route('/products/<int:product_id>', methods=['GET'])
+def get_recommended_items(product_id):
+    items = getTopfive(product_id)
+    print(items)
+    return jsonify(items)
+    
+    
 
 if __name__ == '__main__':
     app.run(debug=True)

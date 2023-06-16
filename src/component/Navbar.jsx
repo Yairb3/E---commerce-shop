@@ -3,6 +3,7 @@ import { NavLink, useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Logo from './Logo';
 import DataContext from "./usedb";
+import { updateReco } from '../databaseAPI';
 
 
 const Navbar = () => {
@@ -12,6 +13,7 @@ const Navbar = () => {
     const { currentName } = useContext(DataContext)
     const history = useHistory();
     function handleLogout() {
+      updateReco();
       const confirmLogout = window.confirm("Are you sure you want to log out?");
       if (confirmLogout){
         window.localStorage.setItem('IS_LOGGED_IN', false);

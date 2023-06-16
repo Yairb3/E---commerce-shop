@@ -1,5 +1,10 @@
 
-
+export const get_recommended_items = async (product_id) => {
+  const response = await fetch('http://localhost:5000/products/' + product_id)
+  const items = await response.json();
+  console.log(items);
+  return items;
+}
 
 export const get_all_items = async () => {
     const response = await fetch('http://localhost:5000/item')
@@ -18,6 +23,15 @@ export const delete_item_by_id = async (id) => {
         }
       });
 }
+
+export const updateReco = async () => {
+  await fetch('http://localhost:5000//logs')
+      .then(response => response.json())
+      .then(data => {
+        console.log(data.message);  
+      });
+}
+
 
 export const add_item = async (item) => {
     await fetch('http://localhost:5000/item', {
