@@ -185,7 +185,7 @@ def deleteLogs():
 
 
 def updateRecommendByLogs():
-    productHistogramDict = ProductHistogramDict()
+    # productHistogramDict = ProductHistogramDict()
     logs = convertJsonToMatrix()
     session1 = session()
     for log in logs:

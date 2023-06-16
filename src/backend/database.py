@@ -5,7 +5,6 @@ from flask_cors import CORS
 from recommend import updateRecommendByLogs
 
 app = Flask(__name__)
-
 CORS(app)
 
 
