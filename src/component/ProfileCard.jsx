@@ -14,7 +14,7 @@ function ProfileCard(user) {
 			<p className="normal-text">{user.user.location}</p>
 			<div className="social-container">
 				<div className="photos">
-					<h1 className="bold-text">{user.user.product}</h1>
+					<h1 className="bold-text">{user.user.products}</h1>
 					<h2 className="smaller-text">Products</h2>
 				</div>
 			</div>

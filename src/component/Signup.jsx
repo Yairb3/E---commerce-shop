@@ -43,7 +43,7 @@ function Signup ({ onSignup }) {
         }
         else {
             const newUser = {
-                product: 1,
+                products: 1,
                 location: location,
                 name: name,
                 email: email,
