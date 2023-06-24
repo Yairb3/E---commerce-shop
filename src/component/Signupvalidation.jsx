@@ -1,4 +1,4 @@
-function Validation(name, email, password,age) {
+function Validation(name, email, password,age, location) {
     let error = {}
     const email_pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     const password_pattern=/^([@#](?=[^aeiou]{7,13}$)(?=[[:alnum:]]{7,13}$)(?=.*[A-Z]{1,}.*$).+)$/
@@ -29,6 +29,9 @@ function Validation(name, email, password,age) {
    
     if(password === "") {  
         error.password = "Password should not be empty" 
+    } 
+    if(location === "") {  
+        error.location = "Location should not be empty" 
     } 
     else if(!uppercasePassword){
         error.password="At least one Uppercase";
