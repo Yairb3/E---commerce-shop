@@ -10,6 +10,8 @@ function Signup ({ onSignup }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
+    const [location, setLocation] = useState("");
+
     const [age, setAge] = useState("");
     const [image, setImage] = useState(null);
     const [errors, setErrors] = useState({});
@@ -31,7 +33,7 @@ function Signup ({ onSignup }) {
     const handleSubmit = (event) => {
         event.preventDefault();
         
-        const err = Validation(name, email, password,age);
+        const err = Validation(name, email, password,age, location);
         if (!image){
             err.image = "Please upload a profile image"
         }
@@ -41,6 +43,8 @@ function Signup ({ onSignup }) {
         }
         else {
             const newUser = {
+                product: 1,
+                location: location,
                 name: name,
                 email: email,
                 password: password,
@@ -71,6 +75,12 @@ function Signup ({ onSignup }) {
                         <input type="text" placeholder="Enter Name" name='name' value={name}
                             onChange={(event)=> setName(event.target.value)} className="form-control rounded-0" />
                         {errors.name && <span className="text-danger"> {errors.name}</span>}
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="name"><strong>Location</strong></label>
+                        <input type="text" placeholder="Enter your location" value={location}
+                            onChange={(event)=> setLocation(event.target.value)} className="form-control rounded-0" />
+                        {errors.location && <span className="text-danger"> {errors.name}</span>}
                     </div>
                     <div className="mb-3">
                         <label htmlFor="email"><strong>Email</strong></label>

@@ -89,8 +89,8 @@ const Navbar = () => {
                   <NavLink to="/Signup" className="btn btn-outline-dark ms-2">
                     <i className="fa fa-user-plus me-1"></i> Register
                   </NavLink>
-                  <NavLink to={"#"} className="btn btn-outline-dark ms-2" onClick={() => {alert("Please log in to view your cart.");  }}>
-                     <i className="fa fa-shopping-cart me-1"></i> Cart ({state.length})
+                  <NavLink to="/cart" className="btn btn-outline-dark ms-2">  
+                    <i className="fa fa-shopping-cart me-1"></i> Cart ({state.length})
                   </NavLink>
                 </>
               )}
