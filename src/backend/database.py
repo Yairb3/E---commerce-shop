@@ -66,6 +66,25 @@ def modify_item(item_id, new_item):
     # if no matching item was found, return False
     return False
 
+# function to modify user in the user list by its email
+def modify_user(user_email, new_user):
+    # load the current items from the file
+    with open('src/backend/users.json', 'r') as f:
+        users = json.load(f)
+
+    # find the user with the matching email
+    for user in users:
+        if user['email'] == user_email:
+            # update the user with the new values
+            user.update(new_user)
+
+            # write the updated items to the file
+            with open('src/backend/users.json', 'w') as f:
+                json.dump(users, f, indent=4)
+            return True
+
+    # if no matching item was found, return False
+    return False
 
 # function to get all items in the item list
 def get_all_items():
@@ -110,7 +129,6 @@ def confidence_interval_lower_bound(avg_rate, count):
 
     Returns: a number representing the lower bound of the confidence interval.
     """
-    confidence = 0.95
     max_potential_score = 5 * count  # each rating is out of 5
     pos = avg_rate * count  # total "upvotes"
     if max_potential_score == 0:
@@ -185,13 +203,11 @@ def getTopfive(productId):
     with open('src/backend/products.json', 'r') as f:
         try:
             products = json.load(f)
-            # print(products)
             try:
                 productsTop5 = products[str(productId)]['top5']
             except:
                 productsTop5 = None
             top5 = []
-            print(productsTop5)
             if productsTop5 == None:
                 return []
             for prodId in productsTop5.keys():
@@ -238,7 +254,15 @@ def update_item(item_id):
         return 'OK'
     else:
         return 'Item not found', 404
-    
+
+# endpoint to handle PUT requests for individual user by email
+@app.route('/users/<string:user_email>', methods=['PUT'])
+def update_user(user_email):
+    new_user = request.json
+    if modify_user(user_email, new_user):
+        return 'OK'
+    else:
+        return 'User not found', 404
 # endpoint to handle GET requests for individual items by ID
 @app.route('/item/<int:item_id>', methods=['GET'])
 def get_item(item_id):
@@ -319,7 +343,6 @@ def updateReco():
 @app.route('/products/<int:product_id>', methods=['GET'])
 def get_recommended_items(product_id):
     items = getTopfive(product_id)
-    print(items)
     return jsonify(items)
     
     
