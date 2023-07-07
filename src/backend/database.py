@@ -3,6 +3,9 @@ import json
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from recommend import updateRecommendByLogs
+import math
+from scipy.special import erfinv
+
 
 app = Flask(__name__)
 CORS(app)
@@ -97,13 +100,38 @@ def get_all_users():
     # return the items as a list
     return users
 
-def get_all_ratings():
-     # load the ratings from the file
+def confidence_interval_lower_bound(avg_rate, count):
+    """
+    Calculate the lower bound of Wilson score confidence interval for a Bernoulli parameter.
+
+    Parameters:
+    star_ratings -- a list of ratings from 1-5
+    confidence -- desired confidence level, default is 0.95 (corresponding to a 95% confidence interval)
+
+    Returns: a number representing the lower bound of the confidence interval.
+    """
+    confidence = 0.95
+    max_potential_score = 5 * count  # each rating is out of 5
+    pos = avg_rate * count  # total "upvotes"
+    if max_potential_score == 0:
+        return 0
+
+    z = 1.96  # 95% confidence
+    phat =  pos / max_potential_score
+    return (phat + z*z/(2*max_potential_score) - z * math.sqrt((phat*(1-phat)+z*z/(4*max_potential_score))/max_potential_score))/(1+z*z/max_potential_score) 
+
+def id_to_confidence_interval_lower_bound():
     with open('src/backend/ratings.json', 'r') as f:
         ratings = json.load(f)
+    result = {}
+    for id, rate in ratings.items():
+        avg, count = rate
+        current_bound = confidence_interval_lower_bound(avg, count)
+        inner_dict = {"value": current_bound}
+        result[id] = inner_dict
+    json_result = json.dumps(result, indent=4)
+    return json_result
 
-    # return the items as a list
-    return ratings
 
 # function to get a specific user by its mail
 def get_user_by_mail(mail):
@@ -243,9 +271,9 @@ def get_user(user_mail):
 
 #endpoint to handle GET requests for all users
 @app.route('/ratings', methods=['GET'])
-def get_ratings():
-    ratings = get_all_ratings()
-    return jsonify(ratings)
+def get_id_to_confidence_val_rating():
+    id_to_confidence_array = id_to_confidence_interval_lower_bound()
+    return jsonify(id_to_confidence_array)
 
 
 

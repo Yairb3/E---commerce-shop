@@ -31,8 +31,6 @@ const Navbar = () => {
       <nav className="navbar navbar-expand-lg navbar-light bg-white py-3 shadow-sm">
       <Logo />
         <div className="container">
-          
-          
           <button
             className="navbar-toggler"
             type="button"
@@ -73,7 +71,6 @@ const Navbar = () => {
                   <NavLink to="/profile"   className="btn btn-outline-dark ">
                     <i className="fa fa-sign-in me-1"></i> Hello {currentName} !    
                   </NavLink>
-                  
                   <NavLink to="/cart" className="btn btn-outline-dark ms-2">  
                     <i className="fa fa-shopping-cart me-1"></i> Cart ({state.length})
                   </NavLink>

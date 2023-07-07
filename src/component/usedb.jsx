@@ -1,5 +1,5 @@
 import {createContext, useState, useEffect} from "react";
-import { get_all_items, get_all_users , get_ratings} from "../databaseAPI";
+import { get_all_items, get_all_users, get_id_to_confidence_array_ratings} from "../databaseAPI";
 
 const DataContext = createContext();
 export const Category = {
@@ -14,8 +14,7 @@ export function DataProvider({children}) {
     const [data, setData] = useState([])
     const [users, setUsers] = useState([])
     const [filter, setFilter] = useState([])
-
-
+    const [idToConfidenceVal, setIdToConfidenceVal] = useState([])
 
     useEffect(() => {
       const getProducts = async () => {
@@ -35,7 +34,15 @@ export function DataProvider({children}) {
       getUsers();
     }, []);
     
-
+    useEffect(() => {
+      const geConfidenceVals = async () => {
+        setLoading(true)
+        const idToConfidenceVal = await get_id_to_confidence_array_ratings()
+        setIdToConfidenceVal(JSON.parse(idToConfidenceVal))
+        setLoading(false)
+      };
+      geConfidenceVals();
+    }, [])
 
 
 useEffect(() => {
@@ -55,15 +62,7 @@ useEffect(() => {
 const [currentName, setCurrentName, ] = useState("")
 const [currentAge, setCurrentAge ] = useState("")
 const [currentImage, setCurrentImage ] = useState("")
-const [ratings, setRatings] = useState({});
 
-useEffect(() => {
-  const getRatings = async () => {
-    const ratings = await get_ratings()
-    setRatings(ratings);
-  };
-  getRatings();
-}, []);
 
 useEffect(() => {
   const currentUser = JSON.parse(window.localStorage.getItem('CURRENT_USER'))
@@ -75,9 +74,8 @@ useEffect(() => {
 }, [])
 
 
-
     return (<DataContext.Provider value=
-    {{data, setData,users, setUsers,ratings, setRatings,loading,filter,currentAge, setCurrentAge,currentImage, setCurrentImage, setFilter, currentName,setCurrentName}}>
+    {{data, setData,users, setUsers, idToConfidenceVal, loading,filter,currentAge, setCurrentAge,currentImage, setCurrentImage, setFilter, currentName,setCurrentName}}>
         {children}
         </DataContext.Provider>);
 }

@@ -83,7 +83,7 @@ export const get_user_by_mail = async (mail) => {
   return user;
 }
 
-export const get_ratings = async () => {
+export const get_id_to_confidence_array_ratings = async () => {
   const response = await fetch('http://localhost:5000/ratings')
   const data = await response.json();
   return data;

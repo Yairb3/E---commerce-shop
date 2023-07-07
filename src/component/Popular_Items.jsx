@@ -1,24 +1,50 @@
-import React, { useContext } from 'react';
+import React, {useContext} from 'react';
 import DataContext from './usedb';
 import { NavLink } from "react-router-dom";
 import { add_new_log } from "../databaseAPI";
+import Skeleton from "react-loading-skeleton";
+
+const Loading = () => {
+  return (
+    <>
+      <div className="col-md-3">
+        <Skeleton height={350} />
+      </div>
+      <div className="col-md-3">
+        <Skeleton height={350} />
+      </div>
+      <div className="col-md-3">
+        <Skeleton height={350} />
+      </div>
+      <div className="col-md-3">
+        <Skeleton height={350} />
+      </div>
+    </>
+  );
+};
 
 const PopularItems = () => {
-  const { ratings, data } = useContext(DataContext);
+  const { data, idToConfidenceVal, loading } = useContext(DataContext);
+  // const [idToConfidenceVal, setIdToConfidenceVal] = useState([])
 
-  // Create an array of objects that represent each item, including its id and sum score
-  const items = Object.keys(ratings).map((id) => ({
-    id: id,
-    sumScore: ratings[id][0],
-  }));
 
-  // Sort the array by sum score in descending order
-  items.sort((a, b) => b.sumScore - a.sumScore);
+  let topProductIds = []
+  if(!loading){
+    let items = Object.keys(idToConfidenceVal).map(function(key) {
+      return [key, idToConfidenceVal[key]]; 
+  });
+    // Sort the array based on the second element
+    items.sort(function(first, second) {
+        return second[1].value - first[1].value;
+    })
+    if(items.length > 0){
+      for (let i = 0; i < 5; i++){
+        topProductIds.push(items[i][0]);
+      }
+    }
 
-  // Get the top 5 items by taking the first 5 items in the sorted array
-  const topItems = items.slice(0, 5);
-  // Filter the products array to include only the top 5 items
-  const topProductIds = topItems.map(item => item.id);
+  }
+  console.log(topProductIds)
   const newtopProductIds = topProductIds.map(str => parseInt(str, 10));
   const filteredData = data.filter(obj => newtopProductIds.includes(obj.id));
 
@@ -26,7 +52,7 @@ const PopularItems = () => {
     <>
       <h3 className="text-blk heading text-center ">Popular Products</h3>
       <div className="img_container">
-        {filteredData.map((product) => (
+        {loading ? <Loading /> : filteredData.map((product) => (
           <div className="col-md-2 mb-4" key={product.id}>
             <div className="card h-100 text-center p-4">
               <img
