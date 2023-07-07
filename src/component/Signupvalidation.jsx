@@ -1,15 +1,11 @@
 function Validation(name, email, password,age, location) {
     let error = {}
     const email_pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    const password_pattern=/^([@#](?=[^aeiou]{7,13}$)(?=[[:alnum:]]{7,13}$)(?=.*[A-Z]{1,}.*$).+)$/
-
-
     const uppercaseRegExp   = /(?=.*?[A-Z])/;
     const lowercaseRegExp   = /(?=.*?[a-z])/;
     const digitsRegExp      = /(?=.*?[0-9])/;
     const specialCharRegExp = /(?=.*?[#?!@$%^&*-])/;
     const minLengthRegExp   = /.{8,}/;
-    const passwordLength =      password.length;
     const uppercasePassword =   uppercaseRegExp.test(password);
     const lowercasePassword =   lowercaseRegExp.test(password);
     const digitsPassword =      digitsRegExp.test(password);

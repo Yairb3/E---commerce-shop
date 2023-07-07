@@ -7,7 +7,6 @@ import { NavLink } from "react-router-dom";
 
 const Logo = () => {
   return (
-    
       <div className='ma4 mt4'>
     <NavLink className="navbar-brand fw-bold fs-4" to="/">
       <Tilt className="Tilt br2 " options={{ max : 55 }} style={{ height: 70, width: 190 }} >
