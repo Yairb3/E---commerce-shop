@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import "../App.css";
 import DataContext, { Category } from "./usedb";
 import emailjs from "emailjs-com";
-import { add_item } from "../databaseAPI";
+import { add_item, update_user } from "../databaseAPI";
 
 const AddNewItemForm = () => {
   const { data } = useContext(DataContext);
@@ -76,6 +76,13 @@ const AddNewItemForm = () => {
         newItem,
         "7EL9yGfRLnRx5EzQ8"
       );
+      const numberOfItems = currentUser.products + 1
+      const updateUser = {...currentUser, products: numberOfItems}
+      update_user(updateUser)
+      // window.localStorage.setItem(
+      //   "CURRENT_USER",
+      //   JSON.stringify(updateUser)
+      // );
       closeForm();
     }
   };

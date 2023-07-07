@@ -65,6 +65,22 @@ export const update_item = async (item) => {
       });
 }
 
+export const update_user = async (user) => {
+  await fetch('http://localhost:5000/users/' + user.email, {
+      method: 'PUT',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(user),
+  }).then(response => {
+      if (response.ok) {
+        console.log('user updated successfully');
+      } else {
+        console.error('User not updated');
+      }
+    });
+}
+
 export const get_item_by_id = async (id) => {
     const response = await fetch('http://localhost:5000/item/' + id)
     const data = await response.json();
