@@ -79,10 +79,6 @@ const AddNewItemForm = () => {
       const numberOfItems = currentUser.products + 1
       const updateUser = {...currentUser, products: numberOfItems}
       update_user(updateUser)
-      // window.localStorage.setItem(
-      //   "CURRENT_USER",
-      //   JSON.stringify(updateUser)
-      // );
       closeForm();
     }
   };

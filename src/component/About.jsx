@@ -1,10 +1,6 @@
 import React from 'react';
 
 const About = () => {
-
-
-
-
     return (
         <div className="responsive-container-block bigContainer">
             <div className="responsive-container-block Container">
