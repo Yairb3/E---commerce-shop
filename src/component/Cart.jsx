@@ -9,7 +9,6 @@ import { add_new_log, get_user_by_mail } from '../databaseAPI';
 const Cart = () => {
   const state = useSelector((state) => state.handleCart);
   const dispatch = useDispatch();
-
   const handleAdd = (item) => {
           const logEntry = {
               eventName: 'cart',
