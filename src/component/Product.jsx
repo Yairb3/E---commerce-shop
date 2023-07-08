@@ -72,7 +72,8 @@ function get_Jaccard_similarity(productId1,productId2, idToProduct){
   if (product1.hasOwnProperty("price") && product2.hasOwnProperty("price")) {
     let diff_price = Math.abs(product1["price"] - product2["price"]);
     // we convert it to a fraction because otherwise it will influence on the result much more than the category.
-    jaccard_value = jaccard_value + 1 / diff_price;
+    jaccard_value = jaccard_value + Math.exp(-diff_price);
+    // jaccard_value = jaccard_value + 1 / diff_price;
   }
 
   // titles comparison end result is num of shared words divided by num of all total unique words in our product.

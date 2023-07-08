@@ -35,3 +35,20 @@ This algorithm determines the top 5 items to display on the home page based on c
 When rendering the home page, we calculate the top 5 products using the lower bound of their confidence interval at a 95% confidence level. To achieve this, there is an HTTP request from `databaseAPI.js` to the backend, triggered by the `get_id_to_confidence_array_ratings()` function. The backend (`database.py`) calculates the confidence interval for all the items using the `id_to_confidence_interval_lower_bound()` function. The results are then sorted, and the top 5 items with the higher lower bounds are selected for display in the `Popular_Items.jsx` component.
 
 This approach takes into account both the average rating and the number of ratings each item has received. By using the lower bound of the confidence interval, we ensure that products with a higher average rating and a larger number of ratings are given more weight, while also accounting for uncertainty when products have fewer ratings. This helps to provide a fair and accurate ranking of the top items on the home page.
+
+## Similar products algorithm:
+This algorithm determines the top 3 most similar products to display on the product page based on the features of products. A product is described by several features we save in our db (`item.json`). For the algorithm we use: category, price, title, item and color. Each product gets a similarity score between 0 to 1. When the product page is loaded we use the context to calculate what are the 3 most similar items (there similarity score is the highest).
+
+The calculation itself, each one of the 5 features gets a score of between 0 to 1, those scores are sumed and than divided by 5 in order to ensure an end value of 0 to 1. The score for each feature are as followed:
+
+Category - an indicator if both products are in the same category.
+
+Price - we want the smaller the diff, the higher the result, so we take the absoulte value of the diff in prices and than in order to transorm it to a value between 0 to 1, we insert into an exp function : exp(-absoulte(diff price)).
+
+Title - using the concept of jaccard similarity, we get a fraction where the deonimator is all the mutual words between both titles of the products, the denominator is the number of all unique words in our main product.
+
+Item - an indicator if both products are in the same item category.
+
+Color - an indicator if both products belong to the same group color, we divided colors into ["black", "white","silver"] and the rest.
+
+This approach gives us a very simple and logical way to look at connections between producs, also we can easily modify and play with our similarities score in order to always be able to change accoridng to trends and the gathering of data along the way.
