@@ -54,7 +54,7 @@ Color - an indicator if both products belong to the same group color, we divided
 This approach gives us a very simple and logical way to look at connections between producs, also we can easily modify and play with our similarities score in order to always be able to change accoridng to trends and the gathering of data along the way.
 
 ## Co-views algorithm:
-The  algorithm aims to identify the top 5 products that may be most relevant to a specific user. In simple, we try to measure the connection between every two products, so when you enter any product page, we will suggest the products with the strongest  correlation to the selected products
+The  algorithm aims to identify the top 5 products that may be most relevant to a specific user. In simple, we try to measure the connection between every two products, so when the user will enter any product page, we will suggest the products with the strongest  correlation to the selected products
 
 For implementation, we chose some main events such as add to cart, view product ,purchase (in our case purchase means connecting to WhatsApp) and gave each event a score that reflects its strength. For example, add to cart received 10 points, purchase 50 points and ect.
 
@@ -110,15 +110,16 @@ def updateRecommendByLogs():
     deleteLogs()
 ```
 **Explanation of the code:**
-  _convertJsonToMatrix() - loads logs.json as a matrix.
-  _session() - creating a new instance of session class, session has only one attribute: logs, which is Logs array (An array that stores all the current logs in a convenient way)
-  _getProductsDB() - loads products.json (the file with al the products Histograms) as a matrix.
-  _Histograms() - Creating a new instance of the Histogram class. The main calculations are done in this class, Therefore, see below the Histogram code with explanations about the functions.
-  -histograms.allHistograms.setProductsDict(prodactDB) - note, if prodactDB is not empty, it means there is already a record of the product's histograms in products.json, so set each product's histogram to be its previous one.
-  _histograms.classifyProducts(session1.logs) -see full explanation of Histograms.classifyProducts below. In general, the function divides the products into groups according to the event in which they were observed.
-  _histograms.updateHistogarm() - see full explanation of Histograms.updateHistogarm below. In general, for each product viewed in the current session, the function updates the score of the other products that appeared with it under the same category, in the product's histogram. So after this function, the score in the histograms is updated.
-  _insert_item(histograms.allHistograms.productsDict) - writing back the updated Histograms to products.json.
-  _deleteLogs() - after updating the histograms, deleting the contents of logs.json.
+
+      _convertJsonToMatrix() - loads logs.json as a matrix.
+      _session() - creating a new instance of session class, session has only one attribute: logs, which is Logs array (An array that stores all the current logs in a convenient way)
+      _getProductsDB() - loads products.json (the file with al the products Histograms) as a matrix.
+      _Histograms() - Creating a new instance of the Histogram class. The main calculations are done in this class, Therefore, see below the Histogram code with explanations about the functions.
+      -histograms.allHistograms.setProductsDict(prodactDB) - note, if prodactDB is not empty, it means there is already a record of the product's histograms in products.json, so set each product's histogram to be its previous one.
+      _histograms.classifyProducts(session1.logs) -see full explanation of Histograms.classifyProducts below. In general, the function divides the products into groups according to the event in which they were observed.
+      _histograms.updateHistogarm() - see full explanation of Histograms.updateHistogarm below. In general, for each product viewed in the current session, the function updates the score of the other products that appeared with it under the same category, in the product's histogram. So after this function, the score in the histograms is updated.
+      _insert_item(histograms.allHistograms.productsDict) - writing back the updated Histograms to products.json.
+      _deleteLogs() - after updating the histograms, deleting the contents of logs.json.
 
 **class Histograms:**
 
@@ -217,6 +218,7 @@ Also, if the set size of deleteProduct is greater than 0, i.e. there are product
  ```
 
 **retrieving the top 5 products**
+
 Finally, on the next session when the user chooses to view any product page, we will retrieve the top 5 products with the updated highest score
 
 *in database.py*
