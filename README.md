@@ -123,13 +123,13 @@ def updateRecommendByLogs():
 
 **class Histograms:**
 
-*Histograms class has two arttibutes:
-    *eventsOfProduct - a dictionary whose keys are the names of the optional events and whose values are sets that should contain the products that appeared in the corresponding event.
-    *allHistograms - an instance of the class ProductHistogramDict. ProductHistogramDict has a dictionary that mapping between productId to the product's Histogram. the         Histogram is formed in another unique class "ProductHistogram" which has the Attributes:  
-      1.self.productId 
-      2.self.top5 = {}
-      3.self.lowestTopScore = tuple()
-      4.self.histogram = {}*
+*Histograms class has two arttibutes:*
+    *eventsOfProduct - a dictionary whose keys are the names of the optional events and whose values are sets that should contain the products that appeared in the corresponding event.*
+    *allHistograms - an instance of the class ProductHistogramDict. ProductHistogramDict has a dictionary that mapping between productId to the product's Histogram. the         Histogram is formed in another unique class "ProductHistogram" which has the Attributes:  *
+        *1.self.productId* 
+        *2.self.top5 = {}*
+        *3.self.lowestTopScore = tuple()*
+        *4.self.histogram = {}*
       
 ```
     def __init__(self) -> None:
