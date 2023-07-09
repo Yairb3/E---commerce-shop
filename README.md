@@ -111,25 +111,26 @@ def updateRecommendByLogs():
 ```
 **Explanation of the code:**
 
-      _convertJsonToMatrix() - loads logs.json as a matrix.
-      _session() - creating a new instance of session class, session has only one attribute: logs, which is Logs array (An array that stores all the current logs in a convenient way)
-      _getProductsDB() - loads products.json (the file with al the products Histograms) as a matrix.
-      _Histograms() - Creating a new instance of the Histogram class. The main calculations are done in this class, Therefore, see below the Histogram code with explanations about the functions.
-      -histograms.allHistograms.setProductsDict(prodactDB) - note, if prodactDB is not empty, it means there is already a record of the product's histograms in products.json, so set each product's histogram to be its previous one.
-      _histograms.classifyProducts(session1.logs) -see full explanation of Histograms.classifyProducts below. In general, the function divides the products into groups according to the event in which they were observed.
-      _histograms.updateHistogarm() - see full explanation of Histograms.updateHistogarm below. In general, for each product viewed in the current session, the function updates the score of the other products that appeared with it under the same category, in the product's histogram. So after this function, the score in the histograms is updated.
-      _insert_item(histograms.allHistograms.productsDict) - writing back the updated Histograms to products.json.
-      _deleteLogs() - after updating the histograms, deleting the contents of logs.json.
+      *convertJsonToMatrix() - loads logs.json as a matrix.
+      *session() - creating a new instance of session class, session has only one attribute: logs, which is Logs array (An array that stores all the current logs in a convenient way)
+      *getProductsDB() - loads products.json (the file with al the products Histograms) as a matrix.
+      *Histograms() - Creating a new instance of the Histogram class. The main calculations are done in this class, Therefore, see below the Histogram code with explanations about the functions.
+      *histograms.allHistograms.setProductsDict(prodactDB) - note, if prodactDB is not empty, it means there is already a record of the product's histograms in products.json, so set each product's histogram to be its previous one.
+      *histograms.classifyProducts(session1.logs) -see full explanation of Histograms.classifyProducts below. In general, the function divides the products into groups according to the event in which they were observed.
+      *histograms.updateHistogarm() - see full explanation of Histograms.updateHistogarm below. In general, for each product viewed in the current session, the function updates the score of the other products that appeared with it under the same category, in the product's histogram. So after this function, the score in the histograms is updated.
+      *insert_item(histograms.allHistograms.productsDict) - writing back the updated Histograms to products.json.
+      *deleteLogs() - after updating the histograms, deleting the contents of logs.json.
 
 **class Histograms:**
 
 *Histograms class has two arttibutes:
   _eventsOfProduct - a dictionary whose keys are the names of the optional events and whose values are sets that should contain the products that appeared in the corresponding event.
   _allHistograms - an instance of the class ProductHistogramDict. ProductHistogramDict has a dictionary that mapping between productId to the product's Histogram. the Histogram is formed in another unique class "ProductHistogram" which has the Attributes:  
-            self.productId 
-            self.top5 = {}
-            self.lowestTopScore = tuple()
-            self.histogram = {}*
+  1.self.productId 
+  2.self.top5 = {}
+  3.self.lowestTopScore = tuple()
+  4.self.histogram = {}*
+  
 ```
     def __init__(self) -> None:
         self.eventsOfProduct = {"view" : set(), "cart" : set(), "purchase" : set(), "removeFromCart" :set() ,"deleteProduct":set()}
