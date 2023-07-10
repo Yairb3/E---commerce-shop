@@ -52,3 +52,191 @@ Item - an indicator if both products are in the same item category.
 Color - an indicator if both products belong to the same group color, we divided colors into ["black", "white","silver"] and the rest.
 
 This approach gives us a very simple and logical way to look at connections between producs, also we can easily modify and play with our similarities score in order to always be able to change accoridng to trends and the gathering of data along the way.
+
+## Co-views algorithm:
+The  algorithm aims to identify the top 5 products that may be most relevant to a specific user. In simple, we try to measure the connection between every two products, so when the user will enter any product page, we will suggest the products with the strongest  correlation to the selected products
+
+For implementation, we chose some main events such as add to cart, view product ,purchase (in our case purchase means connecting to WhatsApp) and gave each event a score that reflects its strength. For example, add to cart received 10 points, purchase 50 points and ect.
+
+When a user makes an action,such as if he purchases a shirt, a log event is generated and saved in a log file (logs.json). 
+
+An example of purchasing an item and creating a log event respectively:
+
+*In Cart.jsx:*
+````
+
+const cartItems = (product) => {
+    const openWhatsApp = async () => {
+        add_new_log("purchase", product.id)
+
+````
+*In database.py*
+````
+def add_new_log(new_log):
+    # load the current items from the file
+    with open('src/backend/logs.json', 'r') as f:
+        try:
+            logs = json.load(f)
+            logs.append(new_log)   
+        except json.JSONDecodeError:
+            logs = []
+            logs.append(new_log) 
+    # write the updated logs to the file
+    with open('src/backend/logs.json', 'w') as f:
+        json.dump(logs, f, indent=4)
+````
+*The output in logs.json*
+```
+{
+        "eventName": "purchase",
+        "productId": 17
+    },
+```
+At the end of the session == when the user logged out, we assign a score to each item that created a log event. The calculation of the new score for each item, taking into account the previous score, is done by a Python algorithm found in recommend.py. When the user  logged out from the site, the updateRecommendByLogs function is called:
+
+```
+def updateRecommendByLogs():
+    logs = convertJsonToMatrix()
+    session1 = session()
+    for log in logs:
+        session1.add(Log(log['eventName'],log['productId']))
+    prodactDB = getProductsDB()
+    histograms = Histograms()
+    if prodactDB != None:
+         histograms.allHistograms.setProductsDict(prodactDB)
+    histograms.classifyProducts(session1.logs)
+    histograms.updateHistogarm()
+    insert_item(histograms.allHistograms.productsDict)
+    deleteLogs()
+```
+**Explanation of the code:**
+
+      (*)convertJsonToMatrix() - loads logs.json as a matrix.
+      (*)session() - creating a new instance of session class, session has only one attribute: logs, which is Logs array (An array that stores all the current logs in a convenient way)
+      (*)getProductsDB() - loads products.json (the file with al the products Histograms) as a matrix.
+      (*)Histograms() - Creating a new instance of the Histogram class. The main calculations are done in this class, Therefore, see below the Histogram code with explanations about the functions.
+      (*)histograms.allHistograms.setProductsDict(prodactDB) - note, if prodactDB is not empty, it means there is already a record of the product's histograms in products.json, so set each product's histogram to be its previous one.
+      (*)histograms.classifyProducts(session1.logs) -see full explanation of Histograms.classifyProducts below. In general, the function divides the products into groups according to the event in which they were observed.
+      (*)histograms.updateHistogarm() - see full explanation of Histograms.updateHistogarm below. In general, for each product viewed in the current session, the function updates the score of the other products that appeared with it under the same category, in the product's histogram. So after this function, the score in the histograms is updated.
+      (*)insert_item(histograms.allHistograms.productsDict) - writing back the updated Histograms to products.json.
+      (*)deleteLogs() - after updating the histograms, deleting the contents of logs.json.
+
+**class Histograms:**
+
+*Histograms class has two arttibutes:*
+    *eventsOfProduct - a dictionary whose keys are the names of the optional events and whose values are sets that should contain the products that appeared in the corresponding event.*
+    *allHistograms - an instance of the class ProductHistogramDict. ProductHistogramDict has a dictionary that mapping between productId to the product's Histogram. the         Histogram is formed in another unique class "ProductHistogram" which has the Attributes:  *
+        *1.self.productId* 
+        *2.self.top5 = {}*
+        *3.self.lowestTopScore = tuple()*
+        *4.self.histogram = {}*
+      
+```
+    def __init__(self) -> None:
+        self.eventsOfProduct = {"view" : set(), "cart" : set(), "purchase" : set(), "removeFromCart" :set() ,"deleteProduct":set()}
+        self.allHistograms =  ProductHistogramDict()
+```
+
+*The function "classifyProducts" goes through the products that appeared in the logs according to the events in which they were observed, and inserts them into the appropriate set in the eventsOfProduct dictionary.
+Also, if the set size of deleteProduct is greater than 0, i.e. there are products to be deleted, the function calls the delProductHandler function for further processing*
+```
+    def classifyProducts(self, logs):
+        for log in logs:
+            self.eventsOfProduct[log.eventName].add(log.productId)
+        if len(self.eventsOfProduct['deleteProduct']) > 0:
+            self.delProductHandler()
+```
+
+*The function "delProductHandler" goes through all the products that need to be deleted, first it makes sure that the selected product does not appear in other events, if so it deletes it from all the event sets. After that, if the product has a histogram, it means that the product was correlated with other products in the past, so every instance of it must be deleted from the rest of the histograms of the products. The function does this by calling the delProductFromHistograms function and finally deletes the histogram of the selected product*
+```
+    def delProductHandler(self):
+        for product in self.eventsOfProduct['deleteProduct']:
+            for eventName in [ "view","cart","purchase","removeFromCart"]:
+                if product in self.eventsOfProduct[eventName]:
+                    self.eventsOfProduct[eventName].remove(product)
+            if str(product) in self.allHistograms.productsDict:
+                self.delProductFromHistograms(str(product))
+                self.allHistograms.productsDict.pop(str(product))
+
+
+    def delProductFromHistograms(self,productId):
+        productH = self.allHistograms.getProduct(productId)
+        for product in productH.histogram.keys():
+            relatedProductH = self.allHistograms.getProduct(product)
+            if productId in relatedProductH.histogram:
+                relatedProductH.histogram.pop(productId)
+                if productId in relatedProductH.top5:
+                    relatedProductH.top5.pop(productId)
+                    self.find_infimumtop5_product(relatedProductH)
+  ```
+*In order to keep the performance of finding the top 5 products in O(1), the top 5 products are saved for each product histogram, and the product with the lowest score among the top 5 is saved too (named lowestTopScore or infimumtop5) , so that when the product score is updated it will be easy to change the conbination of the top 5 products. The only time we will go through all the products apeares in a  product's  histogram and compare the scores of all products to find a new Top5 conbination will only be if a deleted product appeared in the top5 products of another product's histogram. The above function finds a new Top5 products in the described situation:*
+```
+    def find_infimumtop5_product(self, productNode)
+        histogram = productNode.histogram
+        # Check if the dictionary is empty
+        if len(histogram) < 1:
+            self.allHistograms.productsDict.pop(str(productNode.productId))
+            return
+        infimumtop5 = tuple()
+        if len(histogram) < 5 :
+            for key, value in productNode.top5.items():
+                if len(infimumtop5) < 1 or value > infimumtop5[1]:
+                    infimumtop5 = (key,value)
+        else:
+            for key, value in histogram.items():
+                if key not in productNode.top5:
+                    if len(infimumtop5) < 1 or value > infimumtop5[1]:
+                        infimumtop5 = (key,value)
+        productNode.lowestTopScore = infimumtop5
+        if len(infimumtop5) > 1:
+            productNode.top5[infimumtop5[0]] =infimumtop5[1]
+ ```
+*The function "updateHistogarm" goes through each category of events, and checks if there are more than two products in the category. If so, they can be given a correlative score to each other. In this case, the function will go through all the products from the same category, and for each selected product, it will increase the score of the other products in the histogram of the selected product . The score is given according to weightedEvents function*
+```
+    def updateHistogarm(self):
+        for eventName in [ "view","cart","purchase","removeFromCart"]:
+            score = self.weightedEvents(eventName)
+            if len(self.eventsOfProduct[eventName]) > 1:
+                for product in self.eventsOfProduct[eventName]:
+                    currProductHistogram = self.allHistograms.getProduct((product))
+                    for relatedProduct in self.eventsOfProduct[eventName]:
+                        if relatedProduct != product:
+                            currProductHistogram.add(relatedProduct,score)
+
+    def weightedEvents(self,eventName):
+        match eventName:
+            case  "view":
+                return 1
+            case "cart":
+                return 10
+            case "purchase":
+                return 50
+            case "removeFromCart":
+                return 5
+            case _:
+                return 0
+
+ ```
+
+**retrieving the top 5 products**
+
+Finally, on the next session when the user chooses to view any product page, we will retrieve the top 5 products with the updated highest score
+
+*in database.py*
+```
+def getTopfive(productId):
+    with open('src/backend/products.json', 'r') as f:
+        try:
+            products = json.load(f)
+            productsTop5 = products[str(productId)]['top5']
+            top5 = []
+            if productsTop5 == None:
+                return []
+            for prodId in productsTop5.keys():
+                top5.append(get_item_by_id(int(prodId)))
+            return top5
+        except:
+            print("Error occurred in getTopFive")
+        
+```
+
