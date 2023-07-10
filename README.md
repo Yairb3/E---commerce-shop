@@ -2,6 +2,14 @@
 # NICE-2-HAVE PROJECT
 ### Made by: Roee Negri, Yuval Ramati, Shahar Blitzer, Yair Ben Michael and Yuval Leibovici.
 
+# About:
+
+Our project Nice2Have is a new website for selling and buying second-hand clothes. Our aim was to create an E-commerce project that focuses on the ever-growing and long-lasting fashion industry. However, as we delved deeper into the fashion world, we became more aware of the environmental impact it has, particularly in terms of pollution. Therefore, we decided to address these environmental concerns by creating a platform exclusively for buying and selling second-hand fashion within Israel.
+We know it is not a surprising or revolutionary concept, but currently, the options for selling used clothes in Israel are not very convenient or popular. People mainly use a Facebook group called "It doesn't fit perfectly", where they post clothes for sale and get lots of comments. However, it's not easy to keep track of everything there. There are also second-hand websites (like "yad2"), but they focus more on selling cars, apartments, and furniture, and less on fashion, especially not for the young population we are aiming to.
+
+Our goal was to fill this gap in the market by providing a user-friendly platform for buying and selling second-hand clothes. We used the benefits of providing a positive user experience (UX) that is user-friendly, easily navigable, accessible, and personalized for each user. This includes features such as category filters and custom recommendations to cater to individual preferences. Additionally, we created an attractive user interface (UI) that enhances the overall user experience.
+Ultimately, our main objective is to encourage people to see the website as a simple, sustainable, and affordable alternative to traditional clothing shopping.
+
 # Run the project
 
 To run the project clone this repo and run:
